@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getContent } from '../lib/content';
+const { settings } = await getContent();
+---
+
+<Layout settings={settings} title="Siden finnes ikke">
+  <section class="container admin-page">
+    <h1>
+      Denne gangen førte
+      <br />
+      trappen et annet sted.
+    </h1>
+    <p>Vi finner ikke siden du leter etter.</p>
+    <a class="button button-gold" href="/">
+      Tilbake til forsiden →
+    </a>
+  </section>
+</Layout>

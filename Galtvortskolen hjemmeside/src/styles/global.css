@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* Grunnstil først. Skjermtilpasninger sist for å bevare CSS-rekkefølgen. */
+@import './base.css';
+@import './header.css';
+@import './home.css';
+@import './footer.css';
+@import './pages.css';
+@import './responsive.css';

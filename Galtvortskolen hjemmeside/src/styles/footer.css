@@ -1,0 +1,55 @@
+/* Bunntekst */
+
+footer {
+  border-top: 1px solid var(--line);
+  background: var(--deep);
+}
+
+.footer-main {
+  padding-block: 55px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1.3fr 1fr;
+  gap: 35px;
+}
+
+.footer-main h2 {
+  font-family: var(--sans);
+  font-size: var(--text-ui);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 5px 0 20px;
+}
+
+.footer-main > div > a:not(.brand) {
+  display: block;
+  font-size: var(--text-ui);
+  color: var(--muted);
+  margin: 10px 0;
+}
+
+.footer-main > div > a:hover {
+  color: var(--gold);
+}
+
+.footer-main p {
+  font-size: var(--text-body);
+  margin-top: 21px;
+  line-height: 1.9;
+}
+
+.footer-main .brand-type {
+  font-size: 26px;
+}
+
+.footer-bottom {
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-block: 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  color: #9ca6ae;
+  font-size: var(--text-small);
+  letter-spacing: 0.3px;
+}

@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import Team from '../components/Team.astro';
+import { getContent, safeLink } from '../lib/content';
+export async function getStaticPaths() {
+  const content = await getContent();
+  return content.pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page, settings: content.settings, team: content.team },
+  }));
+}
+const { page, settings, team } = Astro.props;
+const isAbout = page.slug === 'om-oss';
+---
+
+<Layout settings={settings} title={page.eyebrow} description={page.intro} image={page.image.url}>
+  <section class="page-hero container">
+    <div>
+      <a class="breadcrumb" href="/">
+        Forside /
+      </a>
+      <h1>{page.title}</h1>
+      <p class="lead">{page.intro}</p>
+    </div>
+    <img src={page.image.url} alt={page.image.alt} width="900" height="1000" fetchpriority="high" />
+  </section>
+  <div class:list={['article-layout', 'container', { 'article-layout--full': isAbout }]}>
+    {!isAbout && (
+      <aside>
+        <p class="eyebrow">På denne siden</p>
+        <nav aria-label="Innhold på siden">
+          {page.sections.map((section) => (
+            <a href={`#${section.anchor || section._key}`}>
+              {section.title}
+              <Icon />
+            </a>
+          ))}
+        </nav>
+      </aside>
+    )}
+    <div class="prose">
+      {page.sections.map((section) =>
+        isAbout && section._key === 'team' ? (
+          <Team team={team} />
+        ) : (
+          <section id={section.anchor || section._key}>
+            <h2>{section.title}</h2>
+            {section.paragraphs.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+            {section.linkUrl && (
+              <a class="text-link" href={safeLink(section.linkUrl)}>
+                {section.linkLabel}
+                <Icon />
+              </a>
+            )}
+          </section>
+        ),
+      )}
+      {isAbout && !page.sections.some((section) => section._key === 'team') && <Team team={team} />}
+      <a class="button button-gold" href="/arrangementer/">
+        Se våre arrangementer <Icon />
+      </a>
+    </div>
+  </div>
+</Layout>

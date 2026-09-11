@@ -1,0 +1,288 @@
+{
+  "settings": {
+    "_id": "siteSettings",
+    "_type": "siteSettings",
+    "siteName": "Galtvortskolen",
+    "description": "Et magisk fellesskap for deg som drømmer om Galtvort. Opplev rollespill, magiske skoletimer og nye vennskap på våre arrangementer.",
+    "bookingUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdZ8juCYWh7ZKZMSUE58v3LWuJILkE2Dpn02ItRsJWgcH1ROg/viewform",
+    "facebookUrl": "https://www.facebook.com/Galtvortskolen/",
+    "instagramUrl": "https://www.instagram.com/galtvortskolen/",
+    "announcement": "Nyttårsball 2027 · 8.–10. januar · Påmeldingen er åpen",
+    "announcementUrl": "/arrangementer/nyttarsball-2027/"
+  },
+  "home": {
+    "_id": "homePage",
+    "_type": "homePage",
+    "eyebrow": "Ditt neste kapittel begynner her",
+    "title": "Du har ventet på brevet.\nNå venter eventyret på deg.",
+    "intro": "En skole full av magi. Et fellesskap fullt av muligheter. Bli en del av Galtvortskolen og skap din egen historie.",
+    "heroImage": {
+      "url": "/images/hero.webp",
+      "alt": "Deltakere og arrangører samlet i trollmannskostymer på fjellet"
+    },
+    "introEyebrow": "Velkommen til Galtvortskolen",
+    "introTitle": "Noen verdener leser du om.\nDenne blir du en del av.",
+    "introText": "Siden 2008 har vi skapt en magisk møteplass for barn og unge inspirert av Harry Potters verden. Her får du være din egen rollefigur, utforske mysterier og møte andre som deler fantasien din.",
+    "experienceTitle": "En helt annen skolehverdag",
+    "experiences": [
+      {
+        "_key": "magic",
+        "title": "Finn magien i deg",
+        "text": "Ta på kappen, grip tryllestaven og gi din egen rollefigur liv.",
+        "image": {
+          "url": "/images/school.webp",
+          "alt": "En kostymekledd karakter med tryllestav og magisk skapning"
+        },
+        "href": "/opplevelsen/",
+        "_type": "experience"
+      },
+      {
+        "_key": "lessons",
+        "title": "Lær det utenom vanlige",
+        "text": "Eliksirer, formler og mysterier. Her er ingen skoledager helt like.",
+        "image": {
+          "url": "/images/gathering.webp",
+          "alt": "En kostymekledd karakter med spisse ører i samtale med deltakere"
+        },
+        "href": "/opplevelsen/#skoletimer",
+        "_type": "experience"
+      },
+      {
+        "_key": "friends",
+        "title": "Finn ditt fellesskap",
+        "text": "Kom med fantasien din. Reis hjem med nye venner og minner.",
+        "image": {
+          "url": "/images/lesson.webp",
+          "alt": "To smilende deltakere i fargerike kostymer"
+        },
+        "href": "/opplevelsen/#fellesskap",
+        "_type": "experience"
+      }
+    ],
+    "parentsTitle": "Store eventyr.\nTrygge rammer.",
+    "parentsText": "Bak magien står et engasjert team med bred erfaring med barn og unge. Vi vet at det betyr mye å føle seg trygg når noen du er glad i skal på leir.",
+    "parentsImage": {
+      "url": "/images/hero.webp",
+      "alt": "Fellesskapet på Galtvortskolen"
+    },
+    "ctaTitle": "Klar for å skrive din egen historie?",
+    "ctaText": "Det er plass til både erfarne trollmenn og deg som aldri har holdt en tryllestav før."
+  },
+  "events": [
+    {
+      "_id": "event-nyttarsball-2027",
+      "_type": "event",
+      "slug": "nyttarsball-2027",
+      "title": "Nyttårsball 2027",
+      "category": "Vinterleir & maskeradeball",
+      "startDate": "2027-01-08",
+      "endDate": "2027-01-10",
+      "deadline": "2026-11-01",
+      "location": "Gudbrandsdal leirskole",
+      "price": 3650,
+      "age": "Fra 11 år",
+      "registrationOpen": true,
+      "summary": "Start året med magiske skoletimer, spennende mysterier og et maskeradeball du sent vil glemme.",
+      "image": {
+        "url": "/images/ball.webp",
+        "alt": "Galtvortskolens Nyttårsball 2027 med gullskrift og svevende lys"
+      },
+      "body": [
+        "Gjør deg klar for en vinterhelg på Galtvort! Gudbrandsdal leirskole forvandles til en verden av magiske skoletimer, rollespill og møter med kjente karakterer.",
+        "Det er mørke tider i magisamfunnet. Ryktene er bekreftet: Voldemort er tilbake. På Galtvort kan den virkelige trusselen sitte på makten. Hvilken side velger du?",
+        "Ballkvelden har temaet maskeradeball. Ta på deg en maske – du vet aldri hvem som er bak!"
+      ],
+      "included": [
+        "Skoletimer som eliksirer, formler, flyving og clairvoyance",
+        "Fire måltider hver dag, med varm lunsj",
+        "Aktiviteter, rollespill og plott gjennom helgen",
+        "Maskeradeball",
+        "Fjærpenn og mappe til skolesaker"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "_id": "page-opplevelsen",
+      "_type": "page",
+      "slug": "opplevelsen",
+      "title": "Et lite steg ut av hverdagen.\nEt stort steg inn i magien.",
+      "eyebrow": "Opplevelsen",
+      "intro": "Hos oss blir du en del av historien. Galtvortskolen er levende rollespill, kreativitet og fellesskap inspirert av Harry Potters verden.",
+      "image": {
+        "url": "/images/school.webp",
+        "alt": "En av de magiske karakterene på Galtvortskolen"
+      },
+      "sections": [
+        {
+          "_key": "rollefigur",
+          "anchor": "rollefigur",
+          "title": "Hvem vil du være?",
+          "paragraphs": [
+            "Du lager din egen rollefigur, med personlighet, bakgrunn og egenskaper som du selv former. Gjennom levende rollespill gjør du karakteren til en del av historien sammen med de andre deltakerne.",
+            "Du trenger ikke erfaring med rollespill for å bli med. Nysgjerrighet og lyst til å delta er et fint utgangspunkt."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "skoletimer",
+          "anchor": "skoletimer",
+          "title": "En timeplan litt utenom det vanlige",
+          "paragraphs": [
+            "Magiske skoletimer, eliksirer og formler gir dagene innhold. Arrangørene planlegger mysterier og hendelser som lar historien utvikle seg underveis."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "fellesskap",
+          "anchor": "fellesskap",
+          "title": "Her er det flere som deg",
+          "paragraphs": [
+            "Vi har holdt arrangementer siden 2008, og mange deltakere kommer tilbake år etter år. Her møtes barn og unge med en felles interesse for Harry Potter, cosplay og levende rollespill."
+          ],
+          "_type": "section"
+        }
+      ]
+    },
+    {
+      "_id": "page-foresatte",
+      "_type": "page",
+      "slug": "foresatte",
+      "title": "Trygghet bak\nalle trylleformlene.",
+      "eyebrow": "Til foreldre og foresatte",
+      "intro": "Det er naturlig å ha spørsmål før du sender noen på leir. Her kan du bli litt bedre kjent med rammene rundt arrangementene våre.",
+      "image": {
+        "url": "/images/hero.webp",
+        "alt": "Deltakere og arrangører på Galtvortskolen"
+      },
+      "sections": [
+        {
+          "_key": "erfaring",
+          "title": "Erfaring siden 2008",
+          "paragraphs": [
+            "Galtvortskolen har arrangert leir og rollespill for barn og unge siden 2008. Teamet har bred erfaring med barn og unge, og mange av arrangørene jobber som lærere til daglig."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "alder",
+          "title": "Et fellesskap på tvers av alder",
+          "paragraphs": [
+            "Deltakerne er fra 11 år og oppover. Rom, husbord og klasser settes sammen slik at det skal være lett å finne venner på lik alder. Skoletimene og opplegget tilpasses ulike aldersgrupper."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "rammer",
+          "title": "Tydelige rammer",
+          "paragraphs": [
+            "Arrangementene foregår på Gudbrandsdal leirskole, der vi dekorerer med rekvisitter for å skape en magisk atmosfære. Alkohol og andre rusmidler er ikke tillatt, verken for deltakere eller arrangører."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "kontakt",
+          "title": "Ta kontakt før påmelding",
+          "paragraphs": [
+            "Har barnet ditt behov for tilrettelegging, eller er det noe dere lurer på? Ta kontakt med arrangørene før påmelding, så kan dere avklare spørsmål sammen."
+          ],
+          "linkLabel": "Kontakt arrangørene",
+          "linkUrl": "https://www.galtvortskolensarrangementer.net/kontakt/",
+          "_type": "section"
+        }
+      ]
+    },
+    {
+      "_id": "page-praktisk",
+      "_type": "page",
+      "slug": "praktisk-info",
+      "title": "Litt forberedelse.\nMye å glede seg til.",
+      "eyebrow": "Praktisk informasjon",
+      "intro": "Her finner du svar på noen av de vanligste spørsmålene før ditt første eventyr.",
+      "image": {
+        "url": "/images/magic.webp",
+        "alt": "Deltaker i trollmannskostyme med tryllestav"
+      },
+      "sections": [
+        {
+          "_key": "sted",
+          "title": "Hvor foregår arrangementene?",
+          "paragraphs": [
+            "Arrangementene våre foregår på Gudbrandsdal leirskole. Se arrangementsiden for aktuelle datoer, pris og påmeldingsfrist."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "paamelding",
+          "title": "Hvordan melder jeg meg på?",
+          "paragraphs": [
+            "Påmeldingen skjer via skjemaet som er lenket fra nettsiden. Les informasjonen om arrangementet og vilkårene i skjemaet før du sender inn påmeldingen."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "pakke",
+          "title": "Hva bør jeg ha med?",
+          "paragraphs": [
+            "Kostyme og klær som passer årstiden er en del av forberedelsene. Følg arrangørenes oppdaterte pakkeliste og praktiske informasjon for det konkrete arrangementet."
+          ],
+          "linkLabel": "Se arrangørenes praktiske informasjon",
+          "linkUrl": "https://www.galtvortskolensarrangementer.net/praktisk-info/",
+          "_type": "section"
+        },
+        {
+          "_key": "stotte",
+          "title": "Spørsmål om leirstøtte?",
+          "paragraphs": [
+            "Du finner informasjon om leirstøtte på arrangørenes eksisterende nettside."
+          ],
+          "linkLabel": "Les om leirstøtte",
+          "linkUrl": "https://www.galtvortskolensarrangementer.net/leirstotte/",
+          "_type": "section"
+        }
+      ]
+    },
+    {
+      "_id": "page-om",
+      "_type": "page",
+      "slug": "om-oss",
+      "title": "Skapt av engasjement.\nDrevet av fantasi.",
+      "eyebrow": "Om Galtvortskolen",
+      "intro": "Vi har skapt magiske arrangementer for barn og unge siden 2008, med Harry Potters verden som inspirasjon.",
+      "image": {
+        "url": "/images/hero.webp",
+        "alt": "Galtvortskolens fellesskap samlet ute i naturen"
+      },
+      "sections": [
+        {
+          "_key": "historie",
+          "title": "Et sted å høre til",
+          "paragraphs": [
+            "Galtvortskolen kombinerer cosplay, levende rollespill og skuespill. Deltakerne får bruke fantasien, utvikle sine egne karakterer og ta del i historier som vi skaper sammen."
+          ],
+          "_type": "section"
+        },
+        {
+          "_key": "team",
+          "title": "Menneskene bak magien",
+          "paragraphs": [
+            "Bak arrangementene står et engasjert team som planlegger og gjennomfører leirene. Vi har bred erfaring med barn og unge, og legger mye arbeid i at deltakerne skal få fine opplevelser."
+          ],
+          "linkLabel": "Møt hele teamet",
+          "linkUrl": "https://www.galtvortskolensarrangementer.net/teamet/",
+          "_type": "section"
+        },
+        {
+          "_key": "kontakt",
+          "title": "Vi hører gjerne fra deg",
+          "paragraphs": [
+            "Lurer du på noe om arrangementene, rollen din eller påmelding? Du kan kontakte arrangørene via kontaktsiden."
+          ],
+          "linkLabel": "Gå til kontaktsiden",
+          "linkUrl": "https://www.galtvortskolensarrangementer.net/kontakt/",
+          "_type": "section"
+        }
+      ]
+    }
+  ]
+}

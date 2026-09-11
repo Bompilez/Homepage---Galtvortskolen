@@ -1,0 +1,486 @@
+{
+  "_id": "teamPage",
+  "_type": "teamPage",
+  "title": "Menneskene bak magien",
+  "intro": "Bli kjent med professorene og teamet som gir Galtvortskolen liv. Her møter du både menneskene og karakterene deres.",
+  "members": [
+    {
+      "_key": "anica-seljestad",
+      "_type": "teamMember",
+      "name": "Anica Seljestad",
+      "responsibility": "Eier av Galtvortskolen",
+      "character": "Professor McSnurp",
+      "subject": "Transfigurasjon",
+      "bio": [
+        "Anica er initiativtaker, gründer og eier av Galtvortskolens Arrangementer. Hun er bosatt i Valdres, har to barn og samboer. Utenom Galtvortskolen jobber hun som rektor på Øystre Slidre kulturskole hvor hun også er teaterinstruktør for Valdres barne- og ungdomsteater, og lærer i kunstfag.",
+        "Anica har drevet Galtvortskolens Arrangementer siden 2008, og i 2007 fikk hun Sam Eydes nyskapningspris for sitt arbeid med barn og unge på internett med nettsiden Galtvortskolen.net.",
+        "Andre roller: Stella Star, Madame Maxime, Queenie Goldstein"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/anica-seljestad-0.webp",
+          "alt": "Anica Seljestad – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8403-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/anica-seljestad-1.webp",
+          "alt": "Anica Seljestad – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC07144-2-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "line-alexandra-nielsen",
+      "_type": "teamMember",
+      "name": "Line Alexandra Nielsen",
+      "responsibility": "Anicas høyre hånd",
+      "character": "Professor Stikling",
+      "subject": "Urtologi",
+      "bio": [
+        "Line har vært med i teamet siden 2012. Hun er ansvarlig for lister og skjemaer ifht. påmeldingene sammen med Anica.",
+        "Line har studert barne- og ungdomsarbeid, men jobber i dag som kinosjef ved Colosseum Kino i Oslo. Tidligere har hun jobbet som områdeleder i Kristiansand Dyrepark i en årrekke. Ellers har hun erfaring med førstehjelp med 40 timers grunnkurs, samt kurs innenfor hjertestarter og livredding i vann.",
+        "Andre roller: V. Dolorosa Uffert, Bellatrix DeMons, Seraphina Picquery"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/line-alexandra-nielsen-0.webp",
+          "alt": "Line Alexandra Nielsen – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-83021-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/line-alexandra-nielsen-1.webp",
+          "alt": "Line Alexandra Nielsen – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC07191-4-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "2",
+          "url": "/images/team/line-alexandra-nielsen-2.webp",
+          "alt": "Line Alexandra Nielsen – bilde 3",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC09259-386-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "hanne-irene-skogly-pettersen",
+      "_type": "teamMember",
+      "name": "Hanne Irene Skogly-Pettersen",
+      "responsibility": "Klubb- og fadderansvarlig",
+      "character": "Professor Rummelfiold",
+      "subject": "Clairvoyance",
+      "bio": [
+        "Hanne har vært med i teamet siden 2010. På arrangementene spiller hun hovedsakelig professor Rummelfiold, som er lærer i Clairvoyance, og svartespaner Dult.",
+        "Hanne er også klubb- og fadderansvarlig.",
+        "Utenfor arrangementene er Hanne ungdomsskolelærer, i tillegg til musikk- og språknerd.",
+        "Andre roller: Dult, Rita Slita"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/hanne-irene-skogly-pettersen-0.webp",
+          "alt": "Hanne Irene Skogly-Pettersen – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8375-1-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/hanne-irene-skogly-pettersen-1.webp",
+          "alt": "Hanne Irene Skogly-Pettersen – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2021/12/gs-7606-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "line-vinje",
+      "_type": "teamMember",
+      "name": "Line Vinje",
+      "responsibility": "SoMe- og promoansvarlig",
+      "character": "Madam Hopp",
+      "subject": "Flyving",
+      "bio": [
+        "Line kommer fra Oslo, og har vært med i teamet siden 2017. Hun var også med som deltaker fra 2008 frem til hun ble med i teamet.",
+        "Line er utdannet sosionom og jobber som miljøterapeut i grunnskolen. Hun har flere års arbeidserfaring fra barnehage, samt noe erfaring som støttekontakt. I tillegg har hun bedrevet annet miljøterapeutisk arbeid med barn og unge, og annet arbeid innenfor barneidretten.",
+        "Line er også ansvarlig for våre Sosiale Medier og promotering.",
+        "Andre roller: Nestor Bindebolt, Madam Knipe, Petra Tinnitus"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/line-vinje-0.webp",
+          "alt": "Line Vinje – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC07111-2-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/line-vinje-1.webp",
+          "alt": "Line Vinje – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/10/DSC07784-2-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "espen-sande-larsen",
+      "_type": "teamMember",
+      "name": "Espen Sande Larsen",
+      "responsibility": "Nattevakt",
+      "character": "Rubeus Gygrid",
+      "subject": "",
+      "bio": [
+        "Espen har vært med i teamet siden 2019. Han var også med som deltaker fra 2015 frem til han ble med i teamet. Espen er hovedsakelig nattevakt på arrangementene, men spiller også en rekke diverse roller.",
+        "Utenom arrangementene jobber Espen som produsent, og har tidligere studert Prosjektledelse innenfor kunst og kreative næringer.",
+        "Andre roller: Den Trinne Munken, Maximillian Klyse"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/espen-sande-larsen-0.webp",
+          "alt": "Espen Sande Larsen – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8330-3-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/espen-sande-larsen-1.webp",
+          "alt": "Espen Sande Larsen – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC09201-378-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "ole-kolnes",
+      "_type": "teamMember",
+      "name": "Ole Kolnes",
+      "responsibility": "Alt-Mulig-Mann og brannansvarlig",
+      "character": "Onge Vipendo + div",
+      "subject": "",
+      "bio": [
+        "Ole har vært med i teamet siden 2009. I tillegg til å være brannansvarlig fyller han også skoene til en rekke diverse roller når det er behov for det.",
+        "Når Ole ikke er på Galtvort er han en byggingeniør som jobber som avdelingsingeniør ved Høgskolen på Vestlandet, Institutt for byggfag. Der utdanner han fortryllende byggingeniører. Ole driver også med bueskyting, filmskaping og matlaging… men helst ikke samtidig.",
+        "Andre roller: Abernathy"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/ole-kolnes-0.webp",
+          "alt": "Ole Kolnes – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08584-256-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/ole-kolnes-1.webp",
+          "alt": "Ole Kolnes – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC09068-Edit-2-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "2",
+          "url": "/images/team/ole-kolnes-2.webp",
+          "alt": "Ole Kolnes – bilde 3",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08693-269-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "petter-hittnes-kjaernsbeck",
+      "_type": "teamMember",
+      "name": "Petter Hittnes-Kjærnsbeck",
+      "responsibility": "Heksamensansvarlig",
+      "character": "Professor Kiste og Vektor",
+      "subject": "Magihistorie og Aritmantikk",
+      "bio": [
+        "Petter kommer fra Eidsvoll, og har vært med i teamet siden 2014. Han var også med som deltaker fra 2009 frem til han ble med i teamet. I tillegg til å spille flere roller, så er Petter også heksamensansvarlig på arrangementene.",
+        "Petter er utdannet skuespiller ved Falmouth University i England, og liker å ta livet med ro med en god blanding av tv, spill, bøker og friluftsliv.",
+        "Andre roller: Lucifus Malfang, Gyldeprinz Gulmedal, Nicholas Flamel"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/petter-hittnes-kjaernsbeck-0.webp",
+          "alt": "Petter Hittnes-Kjærnsbeck – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8199-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/petter-hittnes-kjaernsbeck-1.webp",
+          "alt": "Petter Hittnes-Kjærnsbeck – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/gs-23-2725-1-768x1152.png?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "thomas-dahl-pedersen",
+      "_type": "teamMember",
+      "name": "Thomas Dahl Pedersen",
+      "responsibility": "Førstehjelpsansvarlig",
+      "character": "Professor Gnureplank",
+      "subject": "Stell av Magiske Vesener",
+      "bio": [
+        "Thomas har vært med i teamet siden 2021. Når Thomas ikke er på Galtvort eller på ekspedisjoner så er han å finne som leder i bad på Aquarama i Kristiansand. Tidligere har han jobbet som driftsleder i badelandet i Dyreparken.",
+        "Hvis Thomas ikke er på Galtvort, på ekspedisjon ELLER i Aquarama, så er neste stopp hans enkeltmannsforetak hvor han er instruktør i grunnleggende førstehjelp, hjertestarter og livredding i vann. Med sin brede erfaring med førstehjelp er Thomas også den som hovedsakelig er ansvarlig for dette på arrangementene våre.",
+        "Andre roller: Gellert Grindelwald, Galøye Bister"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/thomas-dahl-pedersen-0.webp",
+          "alt": "Thomas Dahl Pedersen – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2022/07/gs-2022-9693-768x1152.png?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/thomas-dahl-pedersen-1.webp",
+          "alt": "Thomas Dahl Pedersen – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/gs-23-2797-1-768x1152.png?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "lukas-skoe",
+      "_type": "teamMember",
+      "name": "Lukas Skoe",
+      "responsibility": "",
+      "character": "Professor Øxodd",
+      "subject": "Astronomi",
+      "bio": [
+        "Lukas kommer fra Skien, og har vært med i teamet siden 2012. Han var også med som deltaker fra 2008 frem til han ble med i teamet.",
+        "Lukas jobber for tiden som togkonduktør i VY. Han har tidligere studert fotografi i London, i tillegg til å ha tatt en bachelorgrad i skuespillerfag. Han har arbeidserfaring fra barnehage og avlastningsgruppe for barn, samt vært svært aktiv med barn og ungdom innenfor idrett.",
+        "Andre roller: Gnav, Remus Lupus, Ludo Humbag, Rufus Grimst"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/lukas-skoe-0.webp",
+          "alt": "Lukas Skoe – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/gs-23-08.05-2242-1-768x1152.png?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/lukas-skoe-1.webp",
+          "alt": "Lukas Skoe – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08443-222-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "atle-seljestad",
+      "_type": "teamMember",
+      "name": "Atle Seljestad",
+      "responsibility": "",
+      "character": "Professor Alma",
+      "subject": "Formler",
+      "bio": [
+        "Atle er utdannet mekatronikkingeniør, og jobber til daglig med å videreutvikle turbinmotorer. Han var med på det aller første minitreffet vårt i 2007, og har vært med på de aller fleste arrangementene etter det.",
+        "Atle er en kløpper på spesialeffekter, noe han drar nytte av i timene sine i Formler for å skape virkelig magiske timer.",
+        "Andre roller: Garrick Olivander"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/atle-seljestad-0.webp",
+          "alt": "Atle Seljestad – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/gs-23-2220-1-768x1152.png?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/atle-seljestad-1.webp",
+          "alt": "Atle Seljestad – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08568-253-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "sara-gjeterud",
+      "_type": "teamMember",
+      "name": "Sara Gjeterud",
+      "responsibility": "",
+      "character": "Professor Absalon",
+      "subject": "Stavløs Magi",
+      "bio": [
+        "Sara er fra Stavern og har vært med i teamet siden 2008. Hun ble med etter å ha sett en plakat om å spille Stikling på et minievent mens hun gikk på lærerskolen på Notodden. Sara introduserte laivkonseptet for Anica, og har vært med på å forme rollespillet som i dag gjennomsyrer arrangementene.",
+        "Sara jobber som musikkhusleder i fritidsklubb, i tillegg til å være stor korpsentusiast! Hun har tidligere også jobbet som faglærer i musikk.",
+        "Andre roller: Fron, Bunty"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/sara-gjeterud-0.webp",
+          "alt": "Sara Gjeterud – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8382-1-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/sara-gjeterud-1.webp",
+          "alt": "Sara Gjeterud – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/gs-23-2180-1-768x1152.png?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "even-nerheim",
+      "_type": "teamMember",
+      "name": "Even Nerheim",
+      "responsibility": "",
+      "character": "Professor Slur",
+      "subject": "Eliksirer",
+      "bio": [
+        "Even kommer fra Ski, og har vært med i teamet siden 2017. Han var også med som deltaker fra 2010 frem til han ble med i teamet.",
+        "Even er utdannet dataingeniør ved nåværende Oslomet og jobber som IT-konsulent i Oslo. Han har en forkjærlighet for loppemarked og bøker.",
+        "Andre roller: Albus Humlesnurr, Wildt, Trokar, Fred eller Frank Wiltersen"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/even-nerheim-0.webp",
+          "alt": "Even Nerheim – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2020/05/gs-leir19-8361-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/even-nerheim-1.webp",
+          "alt": "Even Nerheim – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08516-238-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "eirik-odde",
+      "_type": "teamMember",
+      "name": "Eirik Odde",
+      "responsibility": "",
+      "character": "Professor Krengle",
+      "subject": "Gompologi",
+      "bio": [
+        "Eirik kommer fra Lom, og har vært med i teamet siden 2020.",
+        "Utenfor arrangementene tar Eirik en bachelor i sosialt arbeid i Stavanger, og har tidligere studert historie i Trondheim. Blant hovedinteressene til Eirik finner du jakt, fiske og friluftsliv. Han er også veldig glad i teater og fantasyrelaterte hobbyer.",
+        "Andre roller: Igor Karkaroff, Fenris Vargar"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/eirik-odde-0.webp",
+          "alt": "Eirik Odde – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2022/07/gs-2022-9663-768x1152.png?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/eirik-odde-1.webp",
+          "alt": "Eirik Odde – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC09125-359-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "jonatan-abelset",
+      "_type": "teamMember",
+      "name": "Jonatan Abelset",
+      "responsibility": "",
+      "character": "Professor Babble",
+      "subject": "Oldruner",
+      "bio": [
+        "Jonatan kommer fra Gjerdrum, og har vært med i teamet siden 2023. Han var også med som deltaker fra 2013 frem til han ble med i teamet.",
+        "I den virkelige verden jobber Jonatan som svømmeinstruktør i Stavanger, og har tidligere jobbet med Escape Room. På fritiden engasjerer han seg i historiefortelling gjennom film, foto, spill og tegneserier.",
+        "Andre roller: Tom Venster, Gissik, Agilbert Fontaine, Fred eller Frank Wiltersen"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/jonatan-abelset-0.webp",
+          "alt": "Jonatan Abelset – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2024/07/gs-23-2733-768x1152.png?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/jonatan-abelset-1.webp",
+          "alt": "Jonatan Abelset – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC09113-Edit-2-2-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "2",
+          "url": "/images/team/jonatan-abelset-2.webp",
+          "alt": "Jonatan Abelset – bilde 3",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08776-290-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "3",
+          "url": "/images/team/jonatan-abelset-3.webp",
+          "alt": "Jonatan Abelset – bilde 4",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08689-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "mathias-hansen",
+      "_type": "teamMember",
+      "name": "Mathias Hansen",
+      "responsibility": "",
+      "character": "Professor Pirrevimp",
+      "subject": "Magiens Drama",
+      "bio": [
+        "Mathias kommer fra Bamble, og har vært med i teamet siden 2022. Han var også med som deltaker i perioden 2014 – 2016.",
+        "Mathias er utdannet skuespiller ved Teaterhøgskolen i Nord-Trøndelag, og jobber som skuespiller ved Grenland Friteater. Han har tidligere erfaring som lærer ved barneskole og jobber også som instruktør for flere lokale barneteatergrupper, i tillegg til at han har regi på russerevyen i Grenland.",
+        "Andre roller: Sirius Svaart, Bart Kroek Sr, Søt, Fabio Faquir, Theseus Scamander"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/mathias-hansen-0.webp",
+          "alt": "Mathias Hansen – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2026/09/9ac1b25a-ed96-4f40-9cf4-6f0dd9551ef0-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "1",
+          "url": "/images/team/mathias-hansen-1.webp",
+          "alt": "Mathias Hansen – bilde 2",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08566-768x1152.jpg?media=1738681908"
+        },
+        {
+          "_key": "2",
+          "url": "/images/team/mathias-hansen-2.webp",
+          "alt": "Mathias Hansen – bilde 3",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC08778-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "trym-winjevoll",
+      "_type": "teamMember",
+      "name": "Trym Winjevoll",
+      "responsibility": "",
+      "character": "Professor Snilehorn",
+      "subject": "Ur-Magi",
+      "bio": [
+        "Trym bor på Gjøvik, og har vært med i teamet siden 2022.",
+        "Trym jobber freelance som skapende skuespiller og produsent. Han har en bachelor i Skuespillerteknikk og teaterproduksjon. I tillegg har han også erfaring som lærer på folkehøgskole og instruktør for både voksne og ungdom.",
+        "Andre roller: Jacob Kowalski, Søt"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/trym-winjevoll-0.webp",
+          "alt": "Trym Winjevoll – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2025/08/DSC00511-684-768x1152.jpg?media=1738681908"
+        }
+      ]
+    },
+    {
+      "_key": "emilie-odegaard-saethre",
+      "_type": "teamMember",
+      "name": "Emilie Ødegaard Sæthre",
+      "responsibility": "",
+      "character": "Augusta Langballe",
+      "subject": "Avansert Urtologi",
+      "bio": [
+        "Emilie kommer fra Valdres, og har vært med i teamet siden 2025.",
+        "Andre roller: Billa Brektveit"
+      ],
+      "photos": [
+        {
+          "_key": "0",
+          "url": "/images/team/emilie-odegaard-saethre-0.webp",
+          "alt": "Emilie Ødegaard Sæthre – bilde 1",
+          "sourceUrl": "https://usercontent.one/wp/www.galtvortskolensarrangementer.net/wp-content/uploads/2026/09/694462ef-105f-4923-9e26-d758fa2bddae-768x1151.jpg?media=1738681908"
+        }
+      ]
+    }
+  ]
+}

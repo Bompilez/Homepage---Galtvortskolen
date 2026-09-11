@@ -1,0 +1,177 @@
+---
+import HouseCup from '../components/HouseCup.astro';
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { getContent, registrationIsOpen, safeLink, dateLabel, money } from '../lib/content';
+const { settings, home, events } = await getContent();
+const nextEvent = events.find((event) => event.endDate >= new Date().toISOString().slice(0, 10));
+---
+
+<Layout settings={settings} image={home.heroImage.url}>
+  <section class="hero">
+    <img
+      class="hero-image"
+      src={home.heroImage.url}
+      alt={home.heroImage.alt}
+      fetchpriority="high"
+      width="1920"
+      height="1280"
+    />
+    <div class="hero-shade"></div>
+    <div class="hero-content container">
+      <h1>{home.title}</h1>
+      <p class="hero-intro">{home.intro}</p>
+      <div class="button-row">
+        <a class="button button-gold" href="/arrangementer/">
+          Finn ditt neste eventyr <Icon />
+        </a>
+        <a class="button button-outline" href="/opplevelsen/">
+          Oppdag Galtvortskolen
+        </a>
+      </div>
+    </div>
+    <a href="#velkommen" class="hero-scroll">
+      La magien begynne <span>↓</span>
+    </a>
+    <span class="hero-caption">Ekte mennesker. Ekte magi.</span>
+  </section>
+  <div class="trust-strip">
+    <span>
+      <Icon name="star" /> Magiske opplevelser siden 2008
+    </span>
+    <span>
+      <Icon name="shield" /> For barn og unge fra 11 år
+    </span>
+    <span>
+      <Icon name="pin" /> Gudbrandsdal leirskole
+    </span>
+  </div>
+  <section class="intro-section container" id="velkommen">
+    <div class="ornament" aria-hidden="true">
+      ✦
+    </div>
+    <h2>{home.introTitle}</h2>
+    <p>{home.introText}</p>
+    <a class="text-link" href="/opplevelsen/">
+      Bli kjent med vår verden <Icon />
+    </a>
+  </section>
+  {nextEvent && (
+    <section class="event-section container" id="arrangementer">
+      <div class="section-heading">
+        <div>
+          <h2>Ditt neste eventyr</h2>
+        </div>
+        <a class="text-link" href="/arrangementer/">
+          Se arrangementer <Icon />
+        </a>
+      </div>
+      <article class="featured-event">
+        <a class="event-image" href={`/arrangementer/${nextEvent.slug}/`}>
+          <img
+            src={nextEvent.image.url}
+            alt={nextEvent.image.alt}
+            loading="lazy"
+            width="1200"
+            height="607"
+          />
+          <span class="image-tag">
+            {registrationIsOpen(nextEvent) ? 'Påmeldingen er åpen' : 'Påmelding stengt'}
+          </span>
+        </a>
+        <div class="event-copy">
+          <h3>{nextEvent.title}</h3>
+          <p>{nextEvent.summary}</p>
+          <div class="event-meta">
+            <span>
+              <Icon name="calendar" />
+              {dateLabel(nextEvent.startDate)} – {dateLabel(nextEvent.endDate)}
+            </span>
+            <span>
+              <Icon name="pin" />
+              {nextEvent.location}
+            </span>
+          </div>
+          <div class="event-action">
+            <a class="button button-gold" href={`/arrangementer/${nextEvent.slug}/`}>
+              Les mer om eventyret <Icon />
+            </a>
+            <span>
+              {money(nextEvent.price)}
+              <small>per deltaker</small>
+            </span>
+          </div>
+        </div>
+      </article>
+    </section>
+  )}
+  <section class="experience-section container">
+    <div class="section-heading">
+      <div>
+        <h2>{home.experienceTitle}</h2>
+      </div>
+      <span class="small-star" aria-hidden="true">
+        ✧
+      </span>
+    </div>
+    <div class="experience-grid">
+      {home.experiences.map((item, index) => (
+        <a class="experience-card" href={safeLink(item.href)}>
+          <div class="card-image">
+            <img
+              src={item.image.url}
+              alt={item.image.alt}
+              loading="lazy"
+              width="600"
+              height="750"
+            />
+            <span class="card-number">0{index + 1}</span>
+          </div>
+          <div class="card-copy">
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <span class="text-link">
+              Utforsk <Icon />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="parents-section">
+    <div class="container parents-grid">
+      <div class="parents-image">
+        <img
+          src={home.parentsImage.url}
+          alt={home.parentsImage.alt}
+          loading="lazy"
+          width="1000"
+          height="750"
+        />
+        <span class="photo-note">Et sted å høre til</span>
+      </div>
+      <div class="parents-copy">
+        <Icon name="shield" />
+        <h2>{home.parentsTitle}</h2>
+        <p>{home.parentsText}</p>
+        <a class="button button-outline" href="/foresatte/">
+          Bli trygg på opplevelsen <Icon />
+        </a>
+      </div>
+    </div>
+  </section>
+  <HouseCup />
+  <section class="closing-cta container">
+    <div class="ornament" aria-hidden="true">
+      ✦
+    </div>
+    <h2>{home.ctaTitle}</h2>
+    <p>{home.ctaText}</p>
+    <a class="button button-gold" href="/arrangementer/">
+      Finn ditt eventyr <Icon />
+    </a>
+    <span class="constellation" aria-hidden="true">
+      ✧
+    </span>
+  </section>
+</Layout>

@@ -1,0 +1,151 @@
+/* Toppmelding, hovedmeny og mobilmeny */
+
+.announcement {
+  min-height: 36px;
+  background: #d8bb81;
+  color: #18202a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 6px 20px;
+  font-size: var(--text-body);
+  font-weight: 600;
+  letter-spacing: 0.6px;
+}
+
+.announcement svg {
+  width: 13px;
+  height: 13px;
+}
+
+.site-header {
+  min-height: 98px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 3.5%;
+  flex-wrap: wrap;
+  gap: 25px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 10;
+  background: var(--ink);
+}
+
+.brand {
+  display: inline-flex;
+  gap: 13px;
+  align-items: center;
+  min-width: 0;
+}
+
+.brand-mark {
+  flex-shrink: 0;
+  position: relative;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-size: 43px;
+  line-height: 1;
+  width: 44px;
+  height: 54px;
+  text-align: center;
+  border: 1px solid var(--gold);
+  border-radius: 45% 45% 46% 46%;
+  padding-top: 3px;
+}
+
+.brand-mark > span {
+  position: absolute;
+  font-size: var(--text-small);
+  right: -6px;
+  top: -6px;
+  background: var(--ink);
+  padding: 1px;
+}
+
+.brand-type {
+  font-family: var(--serif);
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: 0.7px;
+}
+
+.brand-type small {
+  display: block;
+  font-family: var(--sans);
+  font-size: var(--text-small);
+  line-height: 1.5;
+  letter-spacing: 0.3px;
+  margin-top: 8px;
+  color: var(--gold);
+}
+
+.desktop-nav {
+  flex-wrap: wrap;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.desktop-nav a {
+  font-size: var(--text-ui);
+  white-space: nowrap;
+  padding: 14px 0;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a[aria-current] {
+  color: var(--gold);
+}
+
+.header-booking {
+  min-height: 44px;
+  padding: 10px 17px;
+  font-size: var(--text-ui);
+  gap: 15px;
+}
+
+.header-booking svg {
+  width: 17px;
+}
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  border: 1px solid var(--line);
+  padding: 10px;
+  background: transparent;
+  font-size: var(--text-ui);
+}
+
+.menu-lines {
+  width: 18px;
+  height: 10px;
+  border-block: 1px solid currentColor;
+}
+
+.mobile-nav {
+  position: absolute;
+  z-index: 20;
+  background: var(--ink);
+  border-bottom: 1px solid var(--line);
+  width: 100%;
+  padding: 10px 28px 25px;
+  box-shadow: 0 20px 30px #0006;
+}
+
+.mobile-nav[hidden] {
+  display: none;
+}
+
+.mobile-nav a {
+  font-size: var(--text-ui);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}

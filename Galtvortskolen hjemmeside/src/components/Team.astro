@@ -1,0 +1,165 @@
+---
+import Icon from './Icon.astro';
+import type { TeamContent } from '../lib/content';
+import '../styles/team.css';
+
+interface Props {
+  team: TeamContent;
+}
+const { team } = Astro.props;
+---
+
+<section id="team" class="team-section" aria-labelledby="team-heading">
+  <h2 id="team-heading">{team.title}</h2>
+  <p class="team-intro">{team.intro}</p>
+
+  <div class="team-grid">
+    {team.members.map((member, index) => (
+      <article class="team-card">
+        {member.photos[0] && (
+          <img
+            class="team-portrait"
+            src={member.photos[0].url}
+            alt={member.photos[0].alt}
+            width="600"
+            height="800"
+            loading="lazy"
+          />
+        )}
+        <div class="team-card-copy">
+          <p class="team-character">{member.character}</p>
+          <h3>{member.name}</h3>
+          {member.responsibility && <p class="team-responsibility">{member.responsibility}</p>}
+          {member.subject && <p class="team-subject">Fag: {member.subject}</p>}
+          <button
+            type="button"
+            class="text-link team-read-more"
+            data-team-template={`team-member-${index}`}
+            aria-haspopup="dialog"
+            aria-controls="team-dialog"
+            aria-label={`Les mer om ${member.name}`}
+          >
+            Les mer <Icon />
+          </button>
+        </div>
+        <template id={`team-member-${index}`}>
+          <div class="team-dialog-grid">
+            <div class="team-gallery">
+              {member.photos[0] && (
+                <img
+                  class="team-dialog-portrait"
+                  src={member.photos[0].url}
+                  alt={member.photos[0].alt}
+                  width="600"
+                  height="800"
+                />
+              )}
+              {member.photos.length > 1 && (
+                <div class="team-thumbnails" role="group" aria-label={`Bilder av ${member.name}`}>
+                  {member.photos.map((photo, photoIndex) => (
+                    <button
+                      type="button"
+                      class="team-thumbnail"
+                      data-photo-src={photo.url}
+                      data-photo-alt={photo.alt}
+                      aria-label={`Vis bilde ${photoIndex + 1} av ${member.name}`}
+                      aria-pressed={photoIndex === 0 ? 'true' : 'false'}
+                    >
+                      <img src={photo.url} alt="" width="90" height="110" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class="team-biography">
+              <h2 id="team-dialog-title">{member.name}</h2>
+              <p class="team-character">{member.character}</p>
+              {member.responsibility && (
+                <p class="team-dialog-responsibility">{member.responsibility}</p>
+              )}
+              {member.subject && <p class="team-dialog-subject">Fag: {member.subject}</p>}
+              {member.bio.map((paragraph) => (
+                <p>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </template>
+      </article>
+    ))}
+  </div>
+</section>
+
+<dialog id="team-dialog" class="team-dialog" aria-labelledby="team-dialog-title">
+  <div class="team-dialog-toolbar">
+    <button type="button" class="team-close" autofocus>
+      Lukk <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="team-dialog-content"></div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('#team-dialog');
+  const content = dialog?.querySelector<HTMLElement>('.team-dialog-content');
+  let opener: HTMLButtonElement | null = null;
+
+  document.querySelectorAll<HTMLButtonElement>('[data-team-template]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const template = document.getElementById(button.dataset.teamTemplate || '');
+      if (!(template instanceof HTMLTemplateElement) || !dialog || !content) return;
+      opener = button;
+      content.replaceChildren(template.content.cloneNode(true));
+      dialog.showModal();
+      dialog.scrollTop = 0;
+      document.documentElement.classList.add('team-dialog-open');
+    });
+  });
+
+  function restorePage() {
+    document.documentElement.classList.remove('team-dialog-open');
+    content?.replaceChildren();
+    opener?.focus({ preventScroll: true });
+  }
+  function closeDialog() {
+    dialog?.close();
+    restorePage();
+  }
+  dialog?.querySelector('.team-close')?.addEventListener('click', closeDialog);
+  dialog?.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeDialog();
+  });
+  dialog?.addEventListener('close', () => {
+    if (!dialog.open) restorePage();
+  });
+
+  function outside(event: MouseEvent) {
+    if (!dialog || event.target !== dialog) return false;
+    const rect = dialog.getBoundingClientRect();
+    return (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    );
+  }
+  let startedOutside = false;
+  dialog?.addEventListener('pointerdown', (event) => {
+    startedOutside = outside(event);
+  });
+  dialog?.addEventListener('click', (event) => {
+    if (startedOutside && outside(event)) closeDialog();
+    startedOutside = false;
+    const target =
+      event.target instanceof Element
+        ? event.target.closest<HTMLButtonElement>('[data-photo-src]')
+        : null;
+    const portrait = content?.querySelector<HTMLImageElement>('.team-dialog-portrait');
+    if (!target?.dataset.photoSrc || !portrait) return;
+    portrait.src = target.dataset.photoSrc;
+    portrait.alt = target.dataset.photoAlt || '';
+    content
+      ?.querySelectorAll('[data-photo-src]')
+      .forEach((button) => button.setAttribute('aria-pressed', String(button === target)));
+  });
+</script>

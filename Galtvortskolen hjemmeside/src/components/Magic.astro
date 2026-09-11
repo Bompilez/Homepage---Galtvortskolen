@@ -1,0 +1,197 @@
+---
+import '../styles/magic.css';
+---
+
+<div class="site-magic">
+  <canvas class="magic-canvas" aria-hidden="true"></canvas>
+  <p class="magic-message" role="status" aria-live="polite" aria-atomic="true"></p>
+  <button
+    class="magic-toggle"
+    type="button"
+    aria-label="Lumos – tenn magien"
+    aria-pressed="false"
+    hidden
+  >
+    <span class="magic-star" aria-hidden="true">
+      ✧
+    </span>
+    <span data-magic-label>Litt magi?</span>
+  </button>
+</div>
+
+<script>
+  const magicRoot = document.querySelector<HTMLElement>('.site-magic');
+  if (magicRoot) {
+    const root = magicRoot;
+    const canvas = root.querySelector<HTMLCanvasElement>('canvas')!;
+    const context = canvas.getContext('2d');
+    const button = root.querySelector<HTMLButtonElement>('button')!;
+    const label = root.querySelector<HTMLElement>('[data-magic-label]')!;
+    const message = root.querySelector<HTMLElement>('.magic-message')!;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    type Spark = {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      born: number;
+      life: number;
+      size: number;
+    };
+    let sparks: Spark[] = [];
+    let active = false;
+    let frame = 0;
+    let messageTimer: ReturnType<typeof setTimeout>;
+    let lastMove = 0;
+    let lastFrame = 0;
+    let glow = { x: 0, y: 0, born: -10000 };
+
+    function resize() {
+      const ratio = Math.min(devicePixelRatio || 1, 2);
+      canvas.width = Math.round(innerWidth * ratio);
+      canvas.height = Math.round(innerHeight * ratio);
+      context?.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function clear() {
+      cancelAnimationFrame(frame);
+      frame = 0;
+      lastFrame = 0;
+      sparks = [];
+      glow.born = -10000;
+      context?.clearRect(0, 0, innerWidth, innerHeight);
+    }
+
+    function draw(now: number) {
+      frame = 0;
+      if (!context || !active || reducedMotion.matches || document.hidden) {
+        clear();
+        return;
+      }
+      const step = Math.min((now - (lastFrame || now)) / 16.67, 2);
+      lastFrame = now;
+      context.clearRect(0, 0, innerWidth, innerHeight);
+      const light = Math.max(0, 1 - (now - glow.born) / 1000);
+      if (light > 0) {
+        const gradient = context.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, 140);
+        gradient.addColorStop(0, `rgba(255,224,158,${light * 0.14})`);
+        gradient.addColorStop(1, 'rgba(255,224,158,0)');
+        context.fillStyle = gradient;
+        context.fillRect(glow.x - 140, glow.y - 140, 280, 280);
+      }
+      sparks = sparks.filter((spark) => now - spark.born < spark.life);
+      for (const spark of sparks) {
+        spark.x += spark.vx * step;
+        spark.y += spark.vy * step;
+        spark.vy += 0.015 * step;
+        const fade = 1 - (now - spark.born) / spark.life;
+        const size = spark.size * fade;
+        context.strokeStyle = `rgba(255,225,160,${fade * 0.85})`;
+        context.lineWidth = 1;
+        context.beginPath();
+        context.moveTo(spark.x - size, spark.y);
+        context.lineTo(spark.x + size, spark.y);
+        context.moveTo(spark.x, spark.y - size);
+        context.lineTo(spark.x, spark.y + size);
+        context.stroke();
+      }
+      if (sparks.length || light > 0) frame = requestAnimationFrame(draw);
+      else lastFrame = 0;
+    }
+
+    function cast(x: number, y: number, burst = false) {
+      if (!context || !active || reducedMotion.matches || document.hidden) return;
+      const now = performance.now();
+      glow = { x, y, born: now };
+      for (let i = 0; i < (burst ? 22 : 2); i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = burst ? 0.7 + Math.random() * 2 : 0.3;
+        sparks.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 0.3,
+          born: now,
+          life: 600 + Math.random() * 600,
+          size: 1 + Math.random() * 3,
+        });
+      }
+      sparks = sparks.slice(-70);
+      if (!frame) frame = requestAnimationFrame(draw);
+    }
+
+    const storageKey = 'galtvort-lumos';
+    function restore() {
+      try {
+        setActive(sessionStorage.getItem(storageKey) === 'on', false);
+      } catch {
+        // The toggle still works when browser storage is unavailable.
+      }
+    }
+
+    function setActive(value: boolean, announce = true) {
+      active = value;
+      button.setAttribute('aria-pressed', String(active));
+      button.setAttribute('aria-label', active ? 'Nox – slukk magien' : 'Lumos – tenn magien');
+      label.textContent = active ? 'Nox' : 'Litt magi?';
+      root.classList.toggle('is-lit', active);
+      clearTimeout(messageTimer);
+      if (!announce) {
+        root.classList.remove('show-message');
+        message.textContent = '';
+        if (!active) clear();
+        return;
+      }
+      try {
+        sessionStorage.setItem(storageKey, active ? 'on' : 'off');
+      } catch {
+        // Storage is optional; it must never prevent activation.
+      }
+      if (!active) {
+        root.classList.remove('show-message');
+        message.textContent = '';
+        clear();
+        return;
+      }
+      message.textContent = reducedMotion.matches
+        ? 'Lumos! Et lite lys i mørket.'
+        : 'Lumos! Beveg pekeren eller berør siden og se hva som skjer.';
+      root.classList.add('show-message');
+      messageTimer = setTimeout(() => root.classList.remove('show-message'), 5500);
+      const rect = button.getBoundingClientRect();
+      cast(rect.left + rect.width / 2, rect.top + rect.height / 2, true);
+    }
+
+    resize();
+    restore();
+    button.hidden = false;
+    window.addEventListener('pageshow', restore);
+    button.addEventListener('click', () => setActive(!active));
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener(
+      'pointermove',
+      (event) => {
+        if (event.pointerType !== 'mouse' || performance.now() - lastMove < 35) return;
+        lastMove = performance.now();
+        cast(event.clientX, event.clientY);
+      },
+      { passive: true },
+    );
+    window.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (event.target instanceof Element && event.target.closest('.magic-toggle')) return;
+        cast(event.clientX, event.clientY, true);
+      },
+      { passive: true },
+    );
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clear();
+    });
+    reducedMotion.addEventListener('change', clear);
+    window.addEventListener('pagehide', () => {
+      clear();
+      clearTimeout(messageTimer);
+    });
+  }
+</script>

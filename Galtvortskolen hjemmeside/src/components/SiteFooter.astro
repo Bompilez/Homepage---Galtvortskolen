@@ -1,0 +1,53 @@
+---
+import { safeLink, type SiteContent } from '../lib/content';
+
+interface Props {
+  settings: SiteContent['settings'];
+}
+const { settings } = Astro.props;
+---
+
+<footer>
+  <div class="footer-main container">
+    <div>
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">
+          G<span>✦</span>
+        </span>
+        <span class="brand-type">
+          {settings.siteName}
+          <small>Her begynner din historie</small>
+        </span>
+      </a>
+      <p>
+        Et magisk fellesskap.
+        <br />
+        Minner som varer lenge etter leiren.
+      </p>
+    </div>
+    <div>
+      <h2>Utforsk</h2>
+      <a href="/opplevelsen/">Opplevelsen</a>
+      <a href="/arrangementer/">Arrangementer</a>
+      <a href="/om-oss/">Om oss</a>
+    </div>
+    <div>
+      <h2>Før du kommer</h2>
+      <a href="/praktisk-info/">Praktisk informasjon</a>
+      <a href="/foresatte/">For foreldre og foresatte</a>
+      <a href="/om-oss/#kontakt">Kontakt oss</a>
+    </div>
+    <div>
+      <h2>Følg magien</h2>
+      <a href={safeLink(settings.instagramUrl)}>Instagram ↗</a>
+      <a href={safeLink(settings.facebookUrl)}>Facebook ↗</a>
+    </div>
+  </div>
+  <div class="footer-bottom container">
+    <span>
+      © {new Date().getFullYear()} {settings.siteName}
+    </span>
+    <span>Inspirert av Harry Potters verden. Skapt av fellesskapet.</span>
+    <a href="/admin/">Redaktørinnlogging</a>
+  </div>
+</footer>

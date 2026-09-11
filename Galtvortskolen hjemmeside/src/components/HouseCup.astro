@@ -1,0 +1,244 @@
+---
+import {
+  cupQuery,
+  standings,
+  leaderLabel,
+  recentEntries,
+  signedPoints,
+  entryDate,
+  houses,
+  type Cup,
+} from '../lib/house-cup';
+import '../styles/house-cup.css';
+
+const projectId = import.meta.env.SANITY_PROJECT_ID;
+const dataset = import.meta.env.SANITY_DATASET || 'production';
+const endpoint = projectId
+  ? `https://${projectId}.api.sanity.io/v2026-01-01/data/query/${dataset}?${new URLSearchParams({ query: cupQuery, perspective: 'published' })}`
+  : '';
+let cup: Cup | null = null;
+try {
+  if (endpoint) {
+    const response = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
+    if (response.ok) cup = (await response.json()).result ?? null;
+  }
+} catch {
+  // The browser retries if Sanity is temporarily unavailable during the build.
+}
+const rows = standings(cup);
+const maximum = Math.max(1, ...rows.map((row) => row.points));
+---
+
+<section class="house-cup container" aria-labelledby="house-cup-title" data-cup-endpoint={endpoint}>
+  <div class="cup-intro">
+    <h2 id="house-cup-title">Kampen om huspokalen</h2>
+    <p>Samarbeid, kunnskap og gode gjerninger. Hvert poeng teller når husene kjemper om seieren.</p>
+    <p class="cup-season-note">
+      Poengene følger husene gjennom sommer- og vinterleiren. Etter vinterleiren starter en ny
+      sesong.
+    </p>
+  </div>
+  <div class="cup-board">
+    <div class="cup-board-heading">
+      <h3 data-cup-season>{cup?.title ?? 'Huscupen'}</h3>
+      <span class="cup-refresh-label">Oppdateres automatisk</span>
+    </div>
+    <p class="cup-leader" data-cup-leader>
+      {leaderLabel(cup)}
+    </p>
+    <ol class="cup-rows" aria-label="Husenes poengstilling">
+      {rows.map((row) => (
+        <li
+          data-house={row.key}
+          data-leading={
+            rows.some((item) => item.points !== 0) && row.points === rows[0].points
+              ? 'true'
+              : 'false'
+          }
+          style={`--house-color: ${row.color}`}
+        >
+          <span class="cup-sparkles" aria-hidden="true">
+            {Array.from({ length: 6 }, (_, i) => (
+              <span style={`--spark: ${i}`}>✦</span>
+            ))}
+          </span>
+          <div class="cup-row-heading">
+            <span>{row.name}</span>
+            <strong data-cup-points>
+              {row.points.toLocaleString('nb-NO')} <span>poeng</span>
+            </strong>
+          </div>
+          <div class="cup-track" aria-hidden="true">
+            <span
+              data-cup-bar
+              style={`width: ${(Math.max(0, row.points) / maximum) * 100}%`}
+            ></span>
+          </div>
+        </li>
+      ))}
+    </ol>
+    <p class="cup-status" data-cup-status role="status">
+      {cup ? 'Henter siste poengstilling …' : 'Ingen poeng er publisert ennå.'}
+    </p>
+    <noscript>
+      <p class="cup-status">
+        Slå på JavaScript for å få oppdaterte poeng uten å laste siden på nytt.
+      </p>
+    </noscript>
+  </div>
+  <div class="cup-history">
+    <div class="cup-history-heading">
+      <h3>Siste poenghendelser</h3>
+      <p>Hvem, hva og hvorfor – de åtte siste hendelsene denne sesongen.</p>
+    </div>
+    <p data-cup-empty hidden={recentEntries(cup).length > 0}>
+      Ingen poenghendelser er registrert ennå.
+    </p>
+    <ol class="cup-events" data-cup-events aria-label="Siste tildelinger og poengtrekk">
+      {recentEntries(cup).map((entry) => (
+        <li
+          class="cup-event"
+          style={`--event-house-color: ${houses.find((house) => house.key === entry.house)?.color}`}
+          data-kind={entry.points > 0 ? 'award' : 'deduction'}
+        >
+          <strong class="cup-event-points">
+            {signedPoints(entry.points)}
+            <span>poeng</span>
+          </strong>
+          <div class="cup-event-copy">
+            <h4>{entry.recipient}</h4>
+            <p class="cup-event-meta">
+              {houses.find((house) => house.key === entry.house)?.name} ·{' '}
+              {entryDate(entry.occurredAt)}
+            </p>
+            <p class="cup-event-reason">{entry.reason}</p>
+            {entry.awardedBy && <p class="cup-event-by">Gitt av {entry.awardedBy}</p>}
+          </div>
+        </li>
+      ))}
+    </ol>
+    <template data-cup-event-template>
+      <li class="cup-event">
+        <strong class="cup-event-points">
+          <b data-event-points></b>
+          <span>poeng</span>
+        </strong>
+        <div class="cup-event-copy">
+          <h4 data-event-recipient></h4>
+          <p class="cup-event-meta" data-event-meta></p>
+          <p class="cup-event-reason" data-event-reason></p>
+          <p class="cup-event-by" data-event-by hidden></p>
+        </div>
+      </li>
+    </template>
+  </div>
+</section>
+
+<script>
+  import {
+    standings,
+    leaderLabel,
+    recentEntries,
+    signedPoints,
+    entryDate,
+    houses,
+    type Cup,
+  } from '../lib/house-cup';
+
+  document.querySelectorAll<HTMLElement>('[data-cup-endpoint]').forEach((board) => {
+    const endpoint = board.dataset.cupEndpoint;
+    if (!endpoint) return;
+    const status = board.querySelector<HTMLElement>('[data-cup-status]')!;
+    const list = board.querySelector<HTMLOListElement>('.cup-rows')!;
+    let pending = false;
+    let visible = false;
+    let lastResult = '';
+
+    async function refresh() {
+      if (pending || !visible || document.hidden) return;
+      pending = true;
+      try {
+        const response = await fetch(endpoint!, {
+          credentials: 'omit',
+          cache: 'no-store',
+          signal: AbortSignal.timeout(10000),
+        });
+        if (!response.ok) throw new Error('Could not fetch standings');
+        const payload = await response.json();
+        if (!Object.hasOwn(payload, 'result')) throw new Error('Invalid standings response');
+        const cup: Cup | null = payload.result;
+        const signature = JSON.stringify(cup);
+        if (signature !== lastResult) {
+          const rows = standings(cup);
+          const maximum = Math.max(1, ...rows.map((row) => row.points));
+          board.querySelector('[data-cup-season]')!.textContent = cup?.title ?? 'Huscupen';
+          board.querySelector('[data-cup-leader]')!.textContent = leaderLabel(cup);
+          rows.forEach((row) => {
+            const item = list.querySelector<HTMLElement>(`[data-house="${row.key}"]`)!;
+            item.dataset.leading = String(
+              rows.some((house) => house.points !== 0) && row.points === rows[0].points,
+            );
+            item.querySelector('[data-cup-points]')!.textContent =
+              `${row.points.toLocaleString('nb-NO')} poeng`;
+            item.querySelector<HTMLElement>('[data-cup-bar]')!.style.width =
+              `${(Math.max(0, row.points) / maximum) * 100}%`;
+            list.append(item);
+          });
+          const events = recentEntries(cup);
+          const eventList = board.querySelector('[data-cup-events]')!;
+          const template = board.querySelector<HTMLTemplateElement>('[data-cup-event-template]')!;
+          const fragment = document.createDocumentFragment();
+          events.forEach((entry) => {
+            const item = template.content.cloneNode(true) as DocumentFragment;
+            item.querySelector<HTMLElement>('li')!.dataset.kind =
+              entry.points > 0 ? 'award' : 'deduction';
+            item
+              .querySelector<HTMLElement>('li')!
+              .style.setProperty(
+                '--event-house-color',
+                houses.find((house) => house.key === entry.house)!.color,
+              );
+            item.querySelector('[data-event-points]')!.textContent = signedPoints(entry.points);
+            item.querySelector('[data-event-recipient]')!.textContent = entry.recipient;
+            item.querySelector('[data-event-meta]')!.textContent =
+              `${houses.find((house) => house.key === entry.house)?.name} · ${entryDate(entry.occurredAt)}`;
+            item.querySelector('[data-event-reason]')!.textContent = entry.reason;
+            const teacher = item.querySelector<HTMLElement>('[data-event-by]')!;
+            teacher.textContent = entry.awardedBy ? `Gitt av ${entry.awardedBy}` : '';
+            teacher.hidden = !entry.awardedBy;
+            fragment.append(item);
+          });
+          eventList.replaceChildren(fragment);
+          board.querySelector<HTMLElement>('[data-cup-empty]')!.hidden = events.length > 0;
+          lastResult = signature;
+        }
+        const date = cup?._updatedAt ? new Date(cup._updatedAt) : null;
+        status.textContent = cup
+          ? date && !Number.isNaN(date.getTime())
+            ? `Poeng oppdatert ${date.toLocaleString('nb-NO', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}. Sjekkes hvert 15. sekund.`
+            : 'Poengstillingen er oppdatert. Sjekkes hvert 15. sekund.'
+          : 'Ingen poeng er publisert ennå.';
+        board.dataset.connection = 'ok';
+      } catch {
+        status.textContent =
+          'Kunne ikke hente nye poeng. Viser sist hentede stilling og prøver igjen automatisk.';
+        board.dataset.connection = 'error';
+      } finally {
+        pending = false;
+      }
+    }
+
+    new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((entry) => entry.isIntersecting);
+        if (visible) void refresh();
+      },
+      { rootMargin: '200px' },
+    ).observe(board);
+    window.setInterval(() => void refresh(), 15000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) void refresh();
+    });
+    window.addEventListener('online', () => void refresh());
+  });
+</script>

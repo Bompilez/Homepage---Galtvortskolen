@@ -1,0 +1,85 @@
+---
+import Icon from './Icon.astro';
+import { safeLink, type SiteContent } from '../lib/content';
+
+interface Props {
+  settings: SiteContent['settings'];
+}
+const { settings } = Astro.props;
+const links = [
+  ['Opplevelsen', '/opplevelsen/'],
+  ['Arrangementer', '/arrangementer/'],
+  ['Praktisk info', '/praktisk-info/'],
+  ['For foresatte', '/foresatte/'],
+  ['Om oss', '/om-oss/'],
+];
+---
+
+{settings.announcement && (
+  <a class="announcement" href={safeLink(settings.announcementUrl)}>
+    <Icon name="star" />
+    <span>{settings.announcement}</span>
+    <Icon />
+  </a>
+)}
+<header class="site-header">
+  <a class="brand" href="/" aria-label={`${settings.siteName} – forsiden`}>
+    <span class="brand-mark" aria-hidden="true">
+      G<span>✦</span>
+    </span>
+    <span class="brand-type">
+      {settings.siteName}
+      <small>Magiske arrangementer siden 2008</small>
+    </span>
+  </a>
+  <nav class="desktop-nav" aria-label="Hovedmeny">
+    {links.map(([label, href]) => (
+      <a href={href} aria-current={Astro.url.pathname.startsWith(href) ? 'page' : undefined}>
+        {label}
+      </a>
+    ))}
+  </nav>
+  <a class="button button-gold header-booking" href="/arrangementer/">
+    Finn ditt eventyr <Icon />
+  </a>
+  <button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">
+    <span class="menu-lines" aria-hidden="true"></span>
+    <span>Meny</span>
+  </button>
+</header>
+<nav id="mobile-menu" class="mobile-nav" aria-label="Mobilmeny" hidden>
+  {links.map(([label, href]) => (
+    <a href={href}>
+      {label}
+      <Icon />
+    </a>
+  ))}
+  <a href={safeLink(settings.bookingUrl)}>
+    Påmelding <Icon />
+  </a>
+</nav>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-menu');
+  function closeMenu() {
+    if (toggle && menu) {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.hidden = true;
+    }
+  }
+  toggle?.addEventListener('click', () => {
+    if (menu) {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.hidden = !open;
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+  matchMedia('(min-width: 1100px)').addEventListener('change', closeMenu);
+</script>

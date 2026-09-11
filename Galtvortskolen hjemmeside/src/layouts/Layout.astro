@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Magic from '../components/Magic.astro';
+import { type SiteContent } from '../lib/content';
+interface Props {
+  title?: string;
+  description?: string;
+  settings: SiteContent['settings'];
+  image?: string;
+}
+const { title, description, settings, image = '/images/hero.webp' } = Astro.props;
+const pageTitle = title
+  ? `${title.replaceAll('\n', ' ')} | ${settings.siteName}`
+  : `${settings.siteName} – Ditt magiske eventyr`;
+---
+
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description || settings.description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#101923" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description || settings.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nb_NO" />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Hopp til innhold
+    </a>
+    <SiteHeader settings={settings} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter settings={settings} />
+    <Magic />
+  </body>
+</html>

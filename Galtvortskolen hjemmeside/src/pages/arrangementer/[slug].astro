@@ -1,0 +1,82 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import { getContent, registrationIsOpen, dateLabel, money, safeLink } from '../../lib/content';
+export async function getStaticPaths() {
+  const content = await getContent();
+  return content.events.map((event) => ({
+    params: { slug: event.slug },
+    props: { event, settings: content.settings },
+  }));
+}
+const { event, settings } = Astro.props;
+const open = registrationIsOpen(event);
+---
+
+<Layout settings={settings} title={event.title} description={event.summary} image={event.image.url}>
+  <section class="event-detail-head container">
+    <a class="breadcrumb" href="/arrangementer/">
+      Arrangementer /
+    </a>
+    <h1>{event.title}</h1>
+    <p class="lead">{event.summary}</p>
+    <img
+      src={event.image.url}
+      alt={event.image.alt}
+      width="1600"
+      height="809"
+      fetchpriority="high"
+    />
+  </section>
+  <div class="event-detail-body container">
+    <article class="prose">
+      <h2>Et nytt kapittel venter</h2>
+      {event.body.map((p) => (
+        <p>{p}</p>
+      ))}
+      <h2>Dette er med i oppholdet</h2>
+      <ul class="included">
+        {event.included.map((item) => (
+          <li>
+            <Icon name="star" />
+            {item}
+          </li>
+        ))}
+      </ul>
+      <a class="text-link" href="/praktisk-info/">
+        Praktisk informasjon <Icon />
+      </a>
+    </article>
+    <aside class="booking-panel">
+      <h2>
+        {money(event.price)}
+        <small>per deltaker</small>
+      </h2>
+      <dl>
+        <dt>Når</dt>
+        <dd>
+          {dateLabel(event.startDate)} – {dateLabel(event.endDate)}
+        </dd>
+        <dt>Hvor</dt>
+        <dd>{event.location}</dd>
+        <dt>Alder</dt>
+        <dd>{event.age}</dd>
+        <dt>Påmeldingsfrist</dt>
+        <dd>{dateLabel(event.deadline)}</dd>
+      </dl>
+      {open ? (
+        <a class="button button-gold" href={safeLink(settings.bookingUrl)}>
+          Gå til påmelding <Icon />
+        </a>
+      ) : (
+        <p class="registration-closed">Påmeldingen er stengt.</p>
+      )}
+      <p class="booking-note">
+        Påmelding håndteres i arrangørenes skjema. Les vilkårene der før du melder deg på.
+      </p>
+      <a class="text-link" href="/foresatte/">
+        Informasjon til foresatte <Icon />
+      </a>
+    </aside>
+  </div>
+</Layout>
