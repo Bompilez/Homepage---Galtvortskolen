@@ -752,13 +752,52 @@
 
 .cup-rows > li {
   position: relative;
+  isolation: isolate;
+  border-radius: 7px;
+}
+.cup-rows > [data-leading='true'] {
+  padding: 10px 12px 12px;
+  margin: -10px -12px -12px;
+  background:
+    radial-gradient(circle at 14% 20%, color-mix(in srgb, var(--house-color) 34%, transparent), transparent 34%),
+    linear-gradient(90deg, color-mix(in srgb, var(--house-color) 14%, transparent), transparent 74%);
+  box-shadow:
+    inset 0 0 22px color-mix(in srgb, var(--house-color) 18%, transparent),
+    0 0 26px color-mix(in srgb, var(--house-color) 14%, transparent);
+}
+.cup-rows > [data-leading='true']::before {
+  content: '';
+  position: absolute;
+  inset: -18px -8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    color-mix(in srgb, var(--house-color) 34%, transparent),
+    transparent 68%
+  );
+  filter: blur(18px);
+  opacity: 0.75;
+  animation: cup-leader-aura 3.8s ease-in-out infinite;
 }
 .cup-rows > [data-leading='true'] .cup-track {
-  box-shadow: 0 0 15px color-mix(in srgb, var(--house-color) 50%, transparent);
+  background: color-mix(in srgb, var(--house-color) 20%, #ffffff16);
+  box-shadow:
+    0 0 22px color-mix(in srgb, var(--house-color) 62%, transparent),
+    inset 0 0 8px #fff2;
+}
+.cup-rows > [data-leading='true'] .cup-track > span {
+  background:
+    linear-gradient(90deg, #fff8, transparent 20%, transparent 75%, #fff7),
+    var(--house-color);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--house-color) 76%, transparent),
+    0 0 34px color-mix(in srgb, var(--house-color) 48%, transparent);
 }
 .cup-sparkles {
   position: absolute;
-  inset: -8px 0 -10px;
+  inset: -34px -6px -12px;
+  z-index: 2;
   pointer-events: none;
   overflow: hidden;
 }
@@ -768,26 +807,59 @@
 [data-leading='true'] .cup-sparkles > span {
   display: block;
   position: absolute;
-  left: calc(8% + var(--spark) * 16%);
-  bottom: 0;
+  left: calc(6% + var(--spark) * 15.5%);
+  bottom: 8px;
   color: var(--gold-light);
-  font-size: 12px;
+  font-size: 18px;
   opacity: 0;
-  text-shadow: 0 0 8px var(--house-color);
-  animation: cup-spark-rise 2s ease-out 2;
-  animation-delay: calc(var(--spark) * 0.13s);
+  text-shadow:
+    0 0 8px var(--white),
+    0 0 18px var(--house-color),
+    0 0 34px color-mix(in srgb, var(--house-color) 78%, transparent);
+  transform-origin: 50% 100%;
+  animation: cup-spark-rise 3.1s ease-out infinite;
+  animation-delay: calc(var(--spark) * -0.43s);
+}
+[data-leading='true'] .cup-sparkles > span:nth-child(even) {
+  color: color-mix(in srgb, var(--house-color) 45%, var(--gold-light));
+  font-size: 22px;
+  animation-duration: 3.7s;
+}
+[data-leading='true'] .cup-sparkles > span:nth-child(3n) {
+  bottom: 18px;
+  font-size: 25px;
+  animation-duration: 2.8s;
+}
+@keyframes cup-leader-aura {
+  0%,
+  100% {
+    opacity: 0.48;
+    transform: scaleX(0.96);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scaleX(1.02);
+  }
 }
 @keyframes cup-spark-rise {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(0.4);
+    transform: translateY(8px) translateX(0) scale(0.35) rotate(0deg);
   }
-  25% {
-    opacity: 0.85;
+  12% {
+    opacity: 1;
+  }
+  35% {
+    opacity: 0.92;
+    transform: translateY(-18px) translateX(10px) scale(0.92) rotate(34deg);
+  }
+  68% {
+    opacity: 0.52;
+    transform: translateY(-48px) translateX(-9px) scale(1.12) rotate(95deg);
   }
   100% {
     opacity: 0;
-    transform: translateY(-42px) scale(0.8) rotate(55deg);
+    transform: translateY(-72px) translateX(15px) scale(0.7) rotate(150deg);
   }
 }
 @keyframes cup-card-float {
