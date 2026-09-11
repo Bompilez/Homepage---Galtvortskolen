@@ -24,6 +24,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@playwright/test": "^1.55.0",
+    "@rolldown/binding-wasm32-wasi": "^1.2.8",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^1.0.0",
     "sharp": "^0.35.4",
@@ -39,6 +40,8 @@
     "typeid-js": {
       "uuid": "^11.1.1"
     },
+    "zod": "4.5.4",
+    "shiki": "4.0.2",
     "smol-toml": "^1.8.0",
     "adm-zip": "^0.6.1"
   }
