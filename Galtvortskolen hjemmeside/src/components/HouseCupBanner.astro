@@ -1,0 +1,102 @@
+---
+import { cupQuery, houses, standings, leaderLabel, type Cup } from '../lib/house-cup';
+
+const projectId = import.meta.env.SANITY_PROJECT_ID;
+const dataset = import.meta.env.SANITY_DATASET || 'production';
+const endpoint = projectId
+  ? `https://${projectId}.api.sanity.io/v2026-01-01/data/query/${dataset}?${new URLSearchParams({ query: cupQuery, perspective: 'published' })}`
+  : '';
+let cup: Cup | null = null;
+try {
+  if (endpoint) {
+    const response = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
+    if (response.ok) cup = (await response.json()).result ?? null;
+  }
+} catch {
+  // Hidden until the browser can fetch fresh cup data.
+}
+const preview = import.meta.env.DEV && !cup;
+const rows = preview
+  ? houses.map((house, index) => ({ ...house, points: [240, 185, 160, 125][index] }))
+  : standings(cup);
+const hasPoints = rows.some((row) => row.points !== 0);
+const sortedRows = rows.slice().sort((a, b) => b.points - a.points);
+const leader = hasPoints ? sortedRows[0] : rows[0];
+const bannerLabel = preview ? 'Smygard leder huscupen' : leaderLabel(cup);
+const bannerPoints = hasPoints ? leader.points.toLocaleString('nb-NO') : '0';
+---
+
+{
+  (endpoint || preview) && (
+    <a
+      class:list={['cup-live-banner', (cup || preview) && 'is-visible', preview && 'is-preview']}
+      href="/huspokalen/"
+      data-cup-banner
+      data-cup-endpoint={endpoint}
+      style={`--leader-color: ${leader.color}`}
+      aria-label="Se stillingen i kampen om huspokalen"
+    >
+      <strong data-banner-leader>
+        {bannerLabel}
+      </strong>
+      <span class="cup-live-points">
+        <b data-banner-points>{bannerPoints}</b>
+        <span>poeng</span>
+      </span>
+    </a>
+  )
+}
+
+<script>
+  import { standings, leaderLabel, type Cup } from '../lib/house-cup';
+
+  document.querySelectorAll<HTMLElement>('[data-cup-banner]').forEach((banner) => {
+    const endpoint = banner.dataset.cupEndpoint;
+    const leader = banner.querySelector<HTMLElement>('[data-banner-leader]')!;
+    const points = banner.querySelector<HTMLElement>('[data-banner-points]')!;
+    let pending = false;
+
+    async function refresh() {
+      if (pending || document.hidden) return;
+      pending = true;
+      try {
+        const response = await fetch(endpoint, {
+          credentials: 'omit',
+          cache: 'no-store',
+          signal: AbortSignal.timeout(10000),
+        });
+        if (!response.ok) throw new Error('Could not fetch cup');
+        const payload = await response.json();
+        const cup: Cup | null = payload.result ?? null;
+        if (!cup) {
+          banner.classList.remove('is-visible');
+          document.documentElement.classList.remove('has-cup-banner');
+          return;
+        }
+        const rows = standings(cup);
+        const hasPoints = rows.some((row) => row.points !== 0);
+        const top = rows[0];
+        banner.style.setProperty('--leader-color', top.color);
+        leader.textContent = leaderLabel(cup);
+        points.textContent = hasPoints ? top.points.toLocaleString('nb-NO') : '0';
+        banner.classList.add('is-visible');
+        document.documentElement.classList.add('has-cup-banner');
+      } catch {
+        banner.classList.remove('is-visible');
+        document.documentElement.classList.remove('has-cup-banner');
+      } finally {
+        pending = false;
+      }
+    }
+
+    if (banner.classList.contains('is-visible')) {
+      document.documentElement.classList.add('has-cup-banner');
+    }
+    if (!endpoint) return;
+    void refresh();
+    window.setInterval(() => void refresh(), 15000);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) void refresh();
+    });
+  });
+</script>

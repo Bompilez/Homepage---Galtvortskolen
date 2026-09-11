@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HouseCup from '../components/HouseCup.astro';
+import { getContent } from '../lib/content';
+import { cupQuery, houses, leaderLabel, standings, type Cup } from '../lib/house-cup';
+
+const { settings } = await getContent();
+const projectId = import.meta.env.SANITY_PROJECT_ID;
+const dataset = import.meta.env.SANITY_DATASET || 'production';
+const endpoint = projectId
+  ? `https://${projectId}.api.sanity.io/v2026-01-01/data/query/${dataset}?${new URLSearchParams({ query: cupQuery, perspective: 'published' })}`
+  : '';
+let cup: Cup | null = null;
+try {
+  if (endpoint) {
+    const response = await fetch(endpoint, { signal: AbortSignal.timeout(5000) });
+    if (response.ok) cup = (await response.json()).result ?? null;
+  }
+} catch {
+  // The live board refreshes in the browser.
+}
+const rows = standings(cup);
+const hasPoints = rows.some((row) => row.points !== 0);
+const leaders = hasPoints ? rows.filter((row) => row.points === rows[0].points) : [];
+const primaryLeader = leaders[0] ?? rows[0];
+const leaderText = hasPoints ? leaderLabel(cup) : 'Første poeng venter';
+const leaderPoints = hasPoints ? primaryLeader.points.toLocaleString('nb-NO') : '0';
+const leaderColor = primaryLeader.color;
+---
+
+<Layout
+  settings={settings}
+  title="Kampen om huspokalen"
+  description="Følg stillingen i Galtvortskolens huspokal og se de siste poenghendelsene."
+>
+  <section class="cup-page-hero" style={`--leader-color: ${leaderColor}`}>
+    <div class="cup-page-bg" aria-hidden="true">
+      {houses.map((house, index) => (
+        <span
+          data-active={house.key === primaryLeader.key ? 'true' : 'false'}
+          style={`--house-color: ${house.color}; --house-index: ${index}`}
+        ></span>
+      ))}
+    </div>
+    <div class="container cup-page-hero-inner">
+      <div class="cup-page-copy">
+        <p class="eyebrow">Huspokalen</p>
+        <h1>{hasPoints ? 'Huset i ledelsen setter tonen.' : 'Huspokalen venter på første trekk.'}</h1>
+        <p>
+          Hver gode gjerning, hvert modige valg og hver smarte løsning kan vippe stillingen.
+          Følg kampen mellom husene mens poengene samles gjennom sesongen.
+        </p>
+      </div>
+
+      <aside class="cup-leader-spotlight" aria-label="Nåværende leder">
+        <span class="leader-kicker">Akkurat nå</span>
+        <div class="leader-mark" aria-hidden="true">
+          {primaryLeader.name.slice(0, 1)}
+        </div>
+        <h2>{leaderText}</h2>
+        <strong>{leaderPoints}<span>poeng</span></strong>
+        <p>
+          {hasPoints
+            ? 'Stillingen lever helt til siste poeng er gitt.'
+            : 'Når sesongen starter, får lederhuset spotlighten her.'}
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="cup-page-rules" aria-label="Hvordan huspokalen fungerer">
+    <div class="container cup-page-rules-inner">
+      <article>
+        <span class="rule-icon" aria-hidden="true">+</span>
+        <div>
+          <p>01</p>
+          <h2>Poeng deles ut</h2>
+          <small>Innsats, samarbeid, kunnskap og rollespill kan gi huset et løft.</small>
+        </div>
+      </article>
+      <article>
+        <span class="rule-icon" aria-hidden="true">!</span>
+        <div>
+          <p>02</p>
+          <h2>Alt kan snu</h2>
+          <small>Små hendelser kan påvirke stillingen, og poeng kan også trekkes.</small>
+        </div>
+      </article>
+      <article>
+        <span class="rule-icon" aria-hidden="true">↻</span>
+        <div>
+          <p>03</p>
+          <h2>Sesongen lever</h2>
+          <small>Tavlen oppdateres når nye hendelser publiseres under arrangementene.</small>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <HouseCup variant="page" />
+</Layout>

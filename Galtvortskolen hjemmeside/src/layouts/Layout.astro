@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
+import HouseCupBanner from '../components/HouseCupBanner.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Magic from '../components/Magic.astro';
 import { type SiteContent } from '../lib/content';
@@ -37,6 +38,7 @@ const pageTitle = title
     <a class="skip-link" href="#main">
       Hopp til innhold
     </a>
+    <HouseCupBanner />
     <SiteHeader settings={settings} />
     <main id="main">
       <slot />

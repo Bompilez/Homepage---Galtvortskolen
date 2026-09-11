@@ -11,6 +11,13 @@ import {
 } from '../lib/house-cup';
 import '../styles/house-cup.css';
 
+interface Props {
+  variant?: 'full' | 'teaser' | 'page';
+}
+
+const { variant = 'full' } = Astro.props;
+const isTeaser = variant === 'teaser';
+const isPage = variant === 'page';
 const projectId = import.meta.env.SANITY_PROJECT_ID;
 const dataset = import.meta.env.SANITY_DATASET || 'production';
 const endpoint = projectId
@@ -27,20 +34,72 @@ try {
 }
 const rows = standings(cup);
 const maximum = Math.max(1, ...rows.map((row) => row.points));
+function floatingCupCards(cup: Cup | null) {
+  const entries = recentEntries(cup);
+  if (entries.length > 0) {
+    return Array.from({ length: Math.min(12, Math.max(8, entries.length)) }, (_, index) => {
+      const entry = entries[index % entries.length];
+      const house = houses.find((item) => item.key === entry.house) ?? houses[0];
+      return {
+        house: house.name,
+        color: house.color,
+        points: signedPoints(entry.points),
+        text: entry.reason,
+      };
+    });
+  }
+
+  return Array.from({ length: 12 }, (_, index) => {
+    const row = rows[index % rows.length];
+    return {
+      house: row.name,
+      color: row.color,
+      points: `${row.points.toLocaleString('nb-NO')}`,
+      text: row.points ? 'Huset holder stand i kampen.' : 'Klart for nye poeng.',
+    };
+  });
+}
+const floatingCards = floatingCupCards(cup);
 ---
 
-<section class="house-cup container" aria-labelledby="house-cup-title" data-cup-endpoint={endpoint}>
-  <div class="cup-intro">
+<section
+  class:list={['house-cup container', isTeaser && 'house-cup-teaser', isPage && 'house-cup-page']}
+  aria-labelledby="house-cup-title"
+  data-cup-endpoint={endpoint}
+>
+  {!isPage && <div class="cup-floating-cards" aria-hidden="true" data-cup-floating-cards>
+    {floatingCards.map((card, index) => (
+      <span
+        class="cup-floating-card"
+        style={`--event-house-color: ${card.color}; --float-index: ${index}`}
+      >
+        <b>{card.points}</b>
+        <small>{card.house}</small>
+        <em>{card.text}</em>
+      </span>
+    ))}
+  </div>}
+  {!isPage && <div class="cup-intro">
     <h2 id="house-cup-title">Kampen om huspokalen</h2>
     <p>Samarbeid, kunnskap og gode gjerninger. Hvert poeng teller når husene kjemper om seieren.</p>
-    <p class="cup-season-note">
-      Poengene følger husene gjennom sommer- og vinterleiren. Etter vinterleiren starter en ny
-      sesong.
-    </p>
-  </div>
+    {
+      isTeaser ? (
+        <a class="button button-outline cup-cta" href="/huspokalen/">
+          Se hele stillingen
+        </a>
+      ) : (
+        <p class="cup-season-note">
+          Poengene følger husene gjennom sommer- og vinterleiren. Etter vinterleiren starter en ny
+          sesong.
+        </p>
+      )
+    }
+  </div>}
   <div class="cup-board">
     <div class="cup-board-heading">
-      <h3 data-cup-season>{cup?.title ?? 'Huscupen'}</h3>
+      <h3 id={isPage ? 'house-cup-title' : undefined} data-cup-season>
+        {cup?.title ?? 'Huscupen'}
+      </h3>
       <span class="cup-refresh-label">Oppdateres automatisk</span>
     </div>
     <p class="cup-leader" data-cup-leader>
@@ -59,7 +118,7 @@ const maximum = Math.max(1, ...rows.map((row) => row.points));
         >
           <span class="cup-sparkles" aria-hidden="true">
             {Array.from({ length: 6 }, (_, i) => (
-              <span style={`--spark: ${i}`}>✦</span>
+              <span style={`--spark: ${i}`}>*</span>
             ))}
           </span>
           <div class="cup-row-heading">
@@ -78,7 +137,7 @@ const maximum = Math.max(1, ...rows.map((row) => row.points));
       ))}
     </ol>
     <p class="cup-status" data-cup-status role="status">
-      {cup ? 'Henter siste poengstilling …' : 'Ingen poeng er publisert ennå.'}
+      {cup ? 'Henter siste poengstilling ...' : 'Ingen poeng er publisert ennå.'}
     </p>
     <noscript>
       <p class="cup-status">
@@ -86,52 +145,54 @@ const maximum = Math.max(1, ...rows.map((row) => row.points));
       </p>
     </noscript>
   </div>
-  <div class="cup-history">
-    <div class="cup-history-heading">
-      <h3>Siste poenghendelser</h3>
-      <p>Hvem, hva og hvorfor – de åtte siste hendelsene denne sesongen.</p>
-    </div>
-    <p data-cup-empty hidden={recentEntries(cup).length > 0}>
-      Ingen poenghendelser er registrert ennå.
-    </p>
-    <ol class="cup-events" data-cup-events aria-label="Siste tildelinger og poengtrekk">
-      {recentEntries(cup).map((entry) => (
-        <li
-          class="cup-event"
-          style={`--event-house-color: ${houses.find((house) => house.key === entry.house)?.color}`}
-          data-kind={entry.points > 0 ? 'award' : 'deduction'}
-        >
+  {!isTeaser && (
+    <div class="cup-history">
+      <div class="cup-history-heading">
+        <h3>Siste poenghendelser</h3>
+        <p>Hvem, hva og hvorfor - de åtte siste hendelsene denne sesongen.</p>
+      </div>
+      <p data-cup-empty hidden={recentEntries(cup).length > 0}>
+        Ingen poenghendelser er registrert ennå.
+      </p>
+      <ol class="cup-events" data-cup-events aria-label="Siste tildelinger og poengtrekk">
+        {recentEntries(cup).map((entry) => (
+          <li
+            class="cup-event"
+            style={`--event-house-color: ${houses.find((house) => house.key === entry.house)?.color}`}
+            data-kind={entry.points > 0 ? 'award' : 'deduction'}
+          >
+            <strong class="cup-event-points">
+              {signedPoints(entry.points)}
+              <span>poeng</span>
+            </strong>
+            <div class="cup-event-copy">
+              <h4>{entry.recipient}</h4>
+              <p class="cup-event-meta">
+                {houses.find((house) => house.key === entry.house)?.name} ·{' '}
+                {entryDate(entry.occurredAt)}
+              </p>
+              <p class="cup-event-reason">{entry.reason}</p>
+              {entry.awardedBy && <p class="cup-event-by">Gitt av {entry.awardedBy}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      <template data-cup-event-template>
+        <li class="cup-event">
           <strong class="cup-event-points">
-            {signedPoints(entry.points)}
+            <b data-event-points></b>
             <span>poeng</span>
           </strong>
           <div class="cup-event-copy">
-            <h4>{entry.recipient}</h4>
-            <p class="cup-event-meta">
-              {houses.find((house) => house.key === entry.house)?.name} ·{' '}
-              {entryDate(entry.occurredAt)}
-            </p>
-            <p class="cup-event-reason">{entry.reason}</p>
-            {entry.awardedBy && <p class="cup-event-by">Gitt av {entry.awardedBy}</p>}
+            <h4 data-event-recipient></h4>
+            <p class="cup-event-meta" data-event-meta></p>
+            <p class="cup-event-reason" data-event-reason></p>
+            <p class="cup-event-by" data-event-by hidden></p>
           </div>
         </li>
-      ))}
-    </ol>
-    <template data-cup-event-template>
-      <li class="cup-event">
-        <strong class="cup-event-points">
-          <b data-event-points></b>
-          <span>poeng</span>
-        </strong>
-        <div class="cup-event-copy">
-          <h4 data-event-recipient></h4>
-          <p class="cup-event-meta" data-event-meta></p>
-          <p class="cup-event-reason" data-event-reason></p>
-          <p class="cup-event-by" data-event-by hidden></p>
-        </div>
-      </li>
-    </template>
-  </div>
+      </template>
+    </div>
+  )}
 </section>
 
 <script>
@@ -150,9 +211,57 @@ const maximum = Math.max(1, ...rows.map((row) => row.points));
     if (!endpoint) return;
     const status = board.querySelector<HTMLElement>('[data-cup-status]')!;
     const list = board.querySelector<HTMLOListElement>('.cup-rows')!;
+    const eventList = board.querySelector<HTMLOListElement>('[data-cup-events]');
+    const template = board.querySelector<HTMLTemplateElement>('[data-cup-event-template]');
+    const empty = board.querySelector<HTMLElement>('[data-cup-empty]');
+    const floatingCards = board.querySelector<HTMLElement>('[data-cup-floating-cards]');
     let pending = false;
     let visible = false;
     let lastResult = '';
+
+    function updateFloatingCards(cup: Cup | null) {
+      if (!floatingCards) return;
+      const entries = recentEntries(cup);
+      const cards =
+        entries.length > 0
+          ? Array.from({ length: Math.min(12, Math.max(8, entries.length)) }, (_, index) => {
+              const entry = entries[index % entries.length];
+              const house = houses.find((item) => item.key === entry.house) ?? houses[0];
+              return {
+                house: house.name,
+                color: house.color,
+                points: signedPoints(entry.points),
+                text: entry.reason,
+              };
+            })
+          : Array.from({ length: 12 }, (_, index) => {
+              const rows = standings(cup);
+              const row = rows[index % rows.length];
+              return {
+                house: row.name,
+                color: row.color,
+                points: row.points.toLocaleString('nb-NO'),
+                text: row.points ? 'Huset holder stand i kampen.' : 'Klart for nye poeng.',
+              };
+            });
+
+      floatingCards.replaceChildren(
+        ...cards.map((card, index) => {
+          const item = document.createElement('span');
+          const points = document.createElement('b');
+          const house = document.createElement('small');
+          const text = document.createElement('em');
+          item.className = 'cup-floating-card';
+          item.style.setProperty('--event-house-color', card.color);
+          item.style.setProperty('--float-index', String(index));
+          points.textContent = card.points;
+          house.textContent = card.house;
+          text.textContent = card.text;
+          item.append(points, house, text);
+          return item;
+        }),
+      );
+    }
 
     async function refresh() {
       if (pending || !visible || document.hidden) return;
@@ -184,32 +293,34 @@ const maximum = Math.max(1, ...rows.map((row) => row.points));
               `${(Math.max(0, row.points) / maximum) * 100}%`;
             list.append(item);
           });
-          const events = recentEntries(cup);
-          const eventList = board.querySelector('[data-cup-events]')!;
-          const template = board.querySelector<HTMLTemplateElement>('[data-cup-event-template]')!;
-          const fragment = document.createDocumentFragment();
-          events.forEach((entry) => {
-            const item = template.content.cloneNode(true) as DocumentFragment;
-            item.querySelector<HTMLElement>('li')!.dataset.kind =
-              entry.points > 0 ? 'award' : 'deduction';
-            item
-              .querySelector<HTMLElement>('li')!
-              .style.setProperty(
-                '--event-house-color',
-                houses.find((house) => house.key === entry.house)!.color,
-              );
-            item.querySelector('[data-event-points]')!.textContent = signedPoints(entry.points);
-            item.querySelector('[data-event-recipient]')!.textContent = entry.recipient;
-            item.querySelector('[data-event-meta]')!.textContent =
-              `${houses.find((house) => house.key === entry.house)?.name} · ${entryDate(entry.occurredAt)}`;
-            item.querySelector('[data-event-reason]')!.textContent = entry.reason;
-            const teacher = item.querySelector<HTMLElement>('[data-event-by]')!;
-            teacher.textContent = entry.awardedBy ? `Gitt av ${entry.awardedBy}` : '';
-            teacher.hidden = !entry.awardedBy;
-            fragment.append(item);
-          });
-          eventList.replaceChildren(fragment);
-          board.querySelector<HTMLElement>('[data-cup-empty]')!.hidden = events.length > 0;
+          updateFloatingCards(cup);
+
+          if (eventList && template && empty) {
+            const events = recentEntries(cup);
+            const fragment = document.createDocumentFragment();
+            events.forEach((entry) => {
+              const item = template.content.cloneNode(true) as DocumentFragment;
+              item.querySelector<HTMLElement>('li')!.dataset.kind =
+                entry.points > 0 ? 'award' : 'deduction';
+              item
+                .querySelector<HTMLElement>('li')!
+                .style.setProperty(
+                  '--event-house-color',
+                  houses.find((house) => house.key === entry.house)!.color,
+                );
+              item.querySelector('[data-event-points]')!.textContent = signedPoints(entry.points);
+              item.querySelector('[data-event-recipient]')!.textContent = entry.recipient;
+              item.querySelector('[data-event-meta]')!.textContent =
+                `${houses.find((house) => house.key === entry.house)?.name} · ${entryDate(entry.occurredAt)}`;
+              item.querySelector('[data-event-reason]')!.textContent = entry.reason;
+              const teacher = item.querySelector<HTMLElement>('[data-event-by]')!;
+              teacher.textContent = entry.awardedBy ? `Gitt av ${entry.awardedBy}` : '';
+              teacher.hidden = !entry.awardedBy;
+              fragment.append(item);
+            });
+            eventList.replaceChildren(fragment);
+            empty.hidden = events.length > 0;
+          }
           lastResult = signature;
         }
         const date = cup?._updatedAt ? new Date(cup._updatedAt) : null;
