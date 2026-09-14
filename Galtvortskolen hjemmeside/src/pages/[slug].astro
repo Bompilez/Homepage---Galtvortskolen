@@ -5,13 +5,21 @@ import Team from '../components/Team.astro';
 import { getContent, safeLink } from '../lib/content';
 export async function getStaticPaths() {
   const content = await getContent();
-  return content.pages.map((page) => ({
-    params: { slug: page.slug },
-    props: { page, settings: content.settings, team: content.team },
-  }));
+  return content.pages
+    .filter((page) => page.slug !== 'foresatte')
+    .map((page) => ({
+      params: { slug: page.slug },
+      props: {
+        page,
+        settings: content.settings,
+        team: content.team,
+        parentsPage: content.pages.find((item) => item.slug === 'foresatte'),
+      },
+    }));
 }
-const { page, settings, team } = Astro.props;
+const { page, settings, team, parentsPage } = Astro.props;
 const isAbout = page.slug === 'om-oss';
+const isPractical = page.slug === 'praktisk-info';
 ---
 
 <Layout settings={settings} title={page.eyebrow} description={page.intro} image={page.image.url}>
@@ -36,6 +44,12 @@ const isAbout = page.slug === 'om-oss';
               <Icon />
             </a>
           ))}
+          {isPractical && parentsPage && (
+            <a href="#foresatte">
+              For foresatte
+              <Icon />
+            </a>
+          )}
         </nav>
       </aside>
     )}
@@ -43,20 +57,107 @@ const isAbout = page.slug === 'om-oss';
       {page.sections.map((section) =>
         isAbout && section._key === 'team' ? (
           <Team team={team} />
+        ) : isPractical && section._key === 'paamelding' ? (
+          <section id={section.anchor || section._key}>
+            <h2>{section.title}</h2>
+            <p>
+              Fyll ut påmeldingsskjemaet innen fristen for arrangementet du vil være med på.
+              Påmeldingstidspunktet gir ingen fordel så lenge du melder deg på innen fristen.
+            </p>
+            <p>
+              Hvis det blir venteliste, trekkes plassene tilfeldig blant de påmeldte. De som får
+              plass, mottar e-post noen dager etter fristen med informasjon om betaling,
+              kostymebestilling og et eget personopplysningsskjema.
+            </p>
+            <p>
+              I det siste skjemaet blir dere blant annet spurt om kontaktpersoner, behov for
+              tilrettelegging og ønsker om fotografering.
+            </p>
+            <a class="text-link" href={safeLink(settings.bookingUrl)}>
+              Gå til påmeldingsskjemaet <Icon />
+            </a>
+          </section>
+        ) : isPractical && section._key === 'sted' ? (
+          <section id={section.anchor || section._key}>
+            <h2>{section.title}</h2>
+            <p>
+              Arrangementene foregår på Gudbrandsdal leirskole på Fagerhøy, høyt til fjells i
+              Gudbrandsdalen. Vi bruker leirskolens lokaler og har erfarne folk på stedet.
+            </p>
+            <p>Se arrangementsiden for datoer, pris og påmeldingsfrist.</p>
+            <a class="text-link" href="https://www.fagerhoi.no/leirskole">
+              Les mer om leirskolen <Icon />
+            </a>
+          </section>
         ) : (
           <section id={section.anchor || section._key}>
             <h2>{section.title}</h2>
             {section.paragraphs.map((paragraph) => (
               <p>{paragraph}</p>
             ))}
+            {page.slug === 'opplevelsen' && section._key === 'skoletimer' && (
+              <p>
+                Fagene har en god dose fantasi, men bygger også på kunnskap og ferdigheter fra blant
+                annet naturfag, forming, samfunnsfag og historie. Vi gir dem magiske navn og lar lek
+                og læring gå hånd i hånd, med opplegg som passer ulike aldersgrupper.
+              </p>
+            )}
             {section.linkUrl && (
-              <a class="text-link" href={safeLink(section.linkUrl)}>
+              <a
+                class="text-link"
+                href={section._key === 'kontakt' ? '/kontakt/' : safeLink(section.linkUrl)}
+              >
                 {section.linkLabel}
                 <Icon />
               </a>
             )}
           </section>
         ),
+      )}
+      {isPractical && parentsPage && (
+        <section id="foresatte" class="parents-info">
+          <p class="eyebrow">For foreldre og foresatte</p>
+          <h2>{parentsPage.title}</h2>
+          <p>{parentsPage.intro}</p>
+          <div class="parents-accordion">
+            {parentsPage.sections.map((section) => (
+              <details>
+                <summary>
+                  {section.title}
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <div class="parents-accordion-content">
+                  {section.paragraphs.map((paragraph) => (
+                    <p>{paragraph}</p>
+                  ))}
+                  {section.linkUrl && (
+                    <a
+                      class="text-link"
+                      href={section._key === 'kontakt' ? '/kontakt/' : safeLink(section.linkUrl)}
+                    >
+                      {section.linkLabel}
+                      <Icon />
+                    </a>
+                  )}
+                </div>
+              </details>
+            ))}
+            <details>
+              <summary>
+                Hvem passer på om natten?
+                <span aria-hidden="true">+</span>
+              </summary>
+              <div class="parents-accordion-content">
+                <p>
+                  Vi har nattevakter mens deltakerne sover. De passer på brannsikkerheten og er
+                  tilgjengelige hvis noen trenger hjelp eller litt ekstra omsorg ved hjemlengsel.
+                  Arrangørteamet har også folk som tar seg av mat, støtte og andre praktiske behov
+                  gjennom oppholdet.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
       )}
       {isAbout && !page.sections.some((section) => section._key === 'team') && <Team team={team} />}
       <a class="button button-gold" href="/arrangementer/">

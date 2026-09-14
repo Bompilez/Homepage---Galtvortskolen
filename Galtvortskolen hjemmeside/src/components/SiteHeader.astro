@@ -6,13 +6,41 @@ interface Props {
   settings: SiteContent['settings'];
 }
 const { settings } = Astro.props;
-const links = [
-  ['Opplevelsen', '/opplevelsen/'],
-  ['Arrangementer', '/arrangementer/'],
-  ['Huspokalen', '/huspokalen/'],
-  ['Praktisk info', '/praktisk-info/'],
-  ['For foresatte', '/foresatte/'],
-  ['Om oss', '/om-oss/'],
+const menuGroups = [
+  {
+    title: 'Opplev magien',
+    links: [
+      {
+        label: 'Opplevelsen',
+        description: 'Skoletimer, rollespill og fellesskap',
+        href: '/opplevelsen/',
+      },
+      { label: 'Huspokalen', description: 'Følg kampen mellom husene', href: '/huspokalen/' },
+    ],
+  },
+  {
+    title: 'Planlegg besøket',
+    links: [
+      { label: 'Arrangementer', description: 'Datoer, pris og påmelding', href: '/arrangementer/' },
+      {
+        label: 'Praktisk info',
+        description: 'Dette er lurt å vite før leiren',
+        href: '/praktisk-info/',
+      },
+      {
+        label: 'For foresatte',
+        description: 'Trygghet og rammer rundt oppholdet',
+        href: '/praktisk-info/#foresatte',
+      },
+    ],
+  },
+  {
+    title: 'Om oss',
+    links: [
+      { label: 'Menneskene bak', description: 'Bli kjent med Galtvortskolen', href: '/om-oss/' },
+      { label: 'Kontakt', description: 'Spørsmål eller forespørsler?', href: '/kontakt/' },
+    ],
+  },
 ];
 ---
 
@@ -33,54 +61,55 @@ const links = [
       <small>Magiske arrangementer siden 2008</small>
     </span>
   </a>
-  <nav class="desktop-nav" aria-label="Hovedmeny">
-    {links.map(([label, href]) => (
-      <a href={href} aria-current={Astro.url.pathname.startsWith(href) ? 'page' : undefined}>
-        {label}
-      </a>
-    ))}
-  </nav>
-  <a class="button button-gold header-booking" href="/arrangementer/">
-    Finn ditt eventyr <Icon />
-  </a>
-  <button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">
+  <button class="menu-toggle" type="button" aria-controls="site-menu" aria-expanded="false">
     <span class="menu-lines" aria-hidden="true"></span>
     <span>Meny</span>
   </button>
-</header>
-<nav id="mobile-menu" class="mobile-nav" aria-label="Mobilmeny" hidden>
-  {links.map(([label, href]) => (
-    <a href={href}>
-      {label}
-      <Icon />
-    </a>
-  ))}
-  <a href={safeLink(settings.bookingUrl)}>
-    Påmelding <Icon />
+  <a class="button button-gold header-events" href="/arrangementer/">
+    Arrangementer <Icon />
   </a>
-</nav>
+  <nav id="site-menu" class="site-menu" aria-label="Hovedmeny" hidden>
+    <div class="mega-menu-panel">
+      <div class="mega-menu-intro">
+        <span>Finn frem</span>
+        <strong>Hvor vil du begynne?</strong>
+        <p>Alt om opplevelsen, oppholdet og menneskene bak magien.</p>
+      </div>
+      {menuGroups.map((group) => (
+        <div class="mega-menu-column">
+          <h2>{group.title}</h2>
+          {group.links.map((link) => (
+            <a
+              href={link.href}
+              aria-current={Astro.url.pathname === link.href ? 'page' : undefined}
+            >
+              <strong>{link.label}</strong>
+              <span>{link.description}</span>
+            </a>
+          ))}
+        </div>
+      ))}
+      <a class="mega-menu-booking" href="/arrangementer/">
+        Finn arrangementer <Icon />
+      </a>
+    </div>
+    <div class="mobile-nav-content">
+      {menuGroups.map((group) => (
+        <div class="mobile-nav-section">
+          <p>{group.title}</p>
+          {group.links.map((link) => (
+            <a href={link.href}>
+              {link.label}
+              <Icon />
+            </a>
+          ))}
+        </div>
+      ))}
+      <a href="/arrangementer/">
+        Finn arrangementer <Icon />
+      </a>
+    </div>
+  </nav>
+</header>
 
-<script>
-  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
-  const menu = document.querySelector<HTMLElement>('#mobile-menu');
-  function closeMenu() {
-    if (toggle && menu) {
-      toggle.setAttribute('aria-expanded', 'false');
-      menu.hidden = true;
-    }
-  }
-  toggle?.addEventListener('click', () => {
-    if (menu) {
-      const open = toggle.getAttribute('aria-expanded') !== 'true';
-      toggle.setAttribute('aria-expanded', String(open));
-      menu.hidden = !open;
-    }
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
-      closeMenu();
-      toggle.focus();
-    }
-  });
-  matchMedia('(min-width: 1100px)').addEventListener('change', closeMenu);
-</script>
+<script src="../scripts/SiteHeader.ts"></script>

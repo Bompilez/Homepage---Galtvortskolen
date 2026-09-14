@@ -28,8 +28,9 @@
   flex-wrap: wrap;
   gap: 25px;
   border-bottom: 1px solid var(--line);
-  position: relative;
-  z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   background: var(--ink);
 }
 
@@ -99,6 +100,133 @@
   color: var(--gold);
 }
 
+.mega-menu summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0;
+  cursor: pointer;
+  font-size: var(--text-ui);
+  list-style: none;
+}
+
+.mega-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.mega-menu summary:hover,
+.mega-menu[open] summary {
+  color: var(--gold);
+}
+
+.mega-menu summary span {
+  transition: transform 0.2s ease;
+}
+
+.mega-menu[open] summary span {
+  transform: rotate(180deg);
+}
+
+.mega-menu-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr repeat(3, 1fr);
+  gap: 25px;
+  padding: 35px;
+  background: var(--deep);
+  border: 1px solid var(--line);
+  box-shadow: 0 25px 45px #0008;
+}
+
+.site-menu {
+  position: absolute;
+  top: 100%;
+  left: 3.5%;
+  right: 3.5%;
+  z-index: 30;
+}
+
+.site-menu[hidden] {
+  display: none;
+}
+
+.mobile-nav-content {
+  display: none;
+}
+
+.mega-menu-booking {
+  grid-column: 1 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 3px;
+  color: var(--gold);
+  font-size: var(--text-ui);
+}
+
+.mega-menu-booking svg {
+  width: 18px;
+}
+
+.mega-menu-intro {
+  padding: 10px 25px 10px 0;
+  border-right: 1px solid var(--line);
+}
+
+.mega-menu-intro > span,
+.mega-menu-column h2 {
+  display: block;
+  margin-bottom: 18px;
+  color: var(--gold);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+}
+
+.mega-menu-intro strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 33px;
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.mega-menu-intro p {
+  margin-top: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.mega-menu-column a {
+  display: block;
+  white-space: normal;
+  padding: 10px 0;
+}
+
+.mega-menu-column a strong,
+.mega-menu-column a span {
+  display: block;
+}
+
+.mega-menu-column a strong {
+  font-size: var(--text-ui);
+  font-weight: 600;
+}
+
+.mega-menu-column a span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+
+.mega-menu-column a:hover span,
+.mega-menu-column a[aria-current] span {
+  color: var(--white);
+}
+
 .header-booking {
   min-height: 44px;
   padding: 10px 17px;
@@ -111,7 +239,7 @@
 }
 
 .menu-toggle {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 10px;
   color: var(--white);
@@ -119,12 +247,79 @@
   padding: 10px;
   background: transparent;
   font-size: var(--text-ui);
+  margin-left: auto;
 }
 
 .menu-lines {
   width: 18px;
-  height: 10px;
-  border-block: 1px solid currentColor;
+  height: 14px;
+  position: relative;
+}
+
+.menu-lines::before,
+.menu-lines::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition:
+    transform 0.25s ease,
+    top 0.25s ease;
+}
+
+.menu-lines::before {
+  top: 3px;
+}
+.menu-lines::after {
+  top: 11px;
+}
+
+.menu-toggle[aria-expanded='true'] .menu-lines::before {
+  top: 7px;
+  transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded='true'] .menu-lines::after {
+  top: 7px;
+  transform: rotate(-45deg);
+}
+
+.header-events {
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: var(--text-ui);
+  gap: 10px;
+}
+
+.header-events svg {
+  width: 17px;
+}
+
+.site-menu:not([hidden]) {
+  animation: menu-enter 0.25s ease-out both;
+}
+
+@keyframes menu-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-menu:not([hidden]) {
+    animation: none;
+  }
+  .menu-lines::before,
+  .menu-lines::after {
+    transition: none;
+  }
 }
 
 .mobile-nav {
@@ -148,4 +343,13 @@
   justify-content: space-between;
   padding: 14px 0;
   border-bottom: 1px solid var(--line);
+}
+
+.mobile-nav-section p {
+  margin: 18px 0 2px;
+  color: var(--gold);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }

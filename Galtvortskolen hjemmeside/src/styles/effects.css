@@ -1,0 +1,238 @@
+.prose section#skoletimer {
+  position: relative;
+}
+
+.prose section#skoletimer::after {
+  content: '✧';
+  position: absolute;
+  right: 4%;
+  top: 20%;
+  color: var(--gold);
+  font-size: 30px;
+  opacity: 0.6;
+  pointer-events: none;
+  animation: magic-drift 7s ease-in-out infinite;
+}
+
+.floating-stars {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.floating-stars span {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  color: var(--gold-light);
+  font-family: Georgia, serif;
+  line-height: 1;
+  animation: star-wander var(--wander-duration, 30s) ease-in-out infinite;
+  animation-delay: var(--wander-delay, -2s);
+}
+
+.floating-stars span::before,
+.floating-stars span::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  animation-duration: var(--shape-duration, 6s);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: var(--shape-delay, -1s);
+}
+
+.floating-stars span::before {
+  content: '✧';
+  animation-name: star-outline;
+}
+
+.floating-stars span::after {
+  content: '✦';
+  font-size: 0.8em;
+  animation-name: star-filled;
+}
+
+.floating-stars span:nth-child(1) {
+  left: 5%;
+  top: 15%;
+  font-size: 26px;
+}
+.floating-stars span:nth-child(2) {
+  left: 17%;
+  top: 75%;
+  font-size: 12px;
+}
+.floating-stars span:nth-child(3) {
+  left: 29%;
+  top: 11%;
+  font-size: 20px;
+}
+.floating-stars span:nth-child(4) {
+  left: 72%;
+  top: 13%;
+  font-size: 16px;
+}
+.floating-stars span:nth-child(5) {
+  left: 88%;
+  top: 30%;
+  font-size: 24px;
+}
+.floating-stars span:nth-child(6) {
+  left: 78%;
+  top: 78%;
+  font-size: 14px;
+}
+.floating-stars span:nth-child(7) {
+  left: 95%;
+  top: 70%;
+  font-size: 19px;
+}
+
+.intro-section > .ornament,
+.intro-section > h2,
+.intro-section > p,
+.intro-section > a,
+.closing-cta > .ornament,
+.closing-cta > h2,
+.closing-cta > p,
+.closing-cta > a {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes star-wander {
+  0%,
+  12% {
+    transform: translate3d(0, 0, 0) rotate(-10deg);
+  }
+  25%,
+  37% {
+    transform: translate3d(calc(var(--drift-x, 24px) * 0.55), calc(var(--drift-y, -20px) * -0.4), 0)
+      rotate(8deg);
+  }
+  50%,
+  62% {
+    transform: translate3d(calc(var(--drift-x, 24px) * -0.3), var(--drift-y, -20px), 0)
+      rotate(-6deg);
+  }
+  75%,
+  87% {
+    transform: translate3d(var(--drift-x, 24px), calc(var(--drift-y, -20px) * 0.45), 0)
+      rotate(14deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(-10deg);
+  }
+}
+
+@keyframes star-outline {
+  0%,
+  15%,
+  90%,
+  100% {
+    opacity: 0.55;
+  }
+  45%,
+  65% {
+    opacity: 0.06;
+  }
+}
+
+@keyframes star-filled {
+  0%,
+  15%,
+  90%,
+  100% {
+    opacity: 0.02;
+  }
+  45%,
+  65% {
+    opacity: 0.65;
+  }
+}
+
+.prose section#skoletimer::after {
+  right: 2%;
+  top: 8%;
+  font-size: 25px;
+  animation-delay: -3s;
+}
+
+@keyframes magic-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-10px) rotate(8deg);
+    opacity: 0.75;
+  }
+}
+
+.house-cup-page .cup-board[data-cup-glint]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    color-mix(in srgb, var(--leader-color, var(--gold)) 28%, transparent) 50%,
+    transparent 65%
+  );
+  background-size: 240% 100%;
+  background-position: 150% 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.house-cup-page .cup-board.is-enchanted::after {
+  animation: cup-entry-glint 1.35s ease-out both;
+}
+
+@keyframes cup-entry-glint {
+  0% {
+    opacity: 0;
+    background-position: 150% 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    background-position: -150% 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .prose section#skoletimer::after {
+    display: none;
+  }
+  .floating-stars span:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .house-cup-page .cup-board.is-enchanted::after,
+  .prose section#skoletimer::after,
+  .floating-stars span,
+  .floating-stars span::before,
+  .floating-stars span::after {
+    animation: none;
+  }
+  .floating-stars span::before {
+    opacity: 0.5;
+  }
+  .floating-stars span::after {
+    opacity: 0;
+  }
+}

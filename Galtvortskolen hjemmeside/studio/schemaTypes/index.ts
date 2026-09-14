@@ -67,6 +67,7 @@ const siteSettings = defineType({
     link('bookingUrl', 'Lenke til påmeldingsskjema'),
     link('facebookUrl', 'Facebook'),
     link('instagramUrl', 'Instagram'),
+    link('discordUrl', 'Invitasjonslenke til Discord', false),
     defineField({
       name: 'announcement',
       title: 'Melding øverst på nettsiden',

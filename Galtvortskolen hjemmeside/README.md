@@ -13,6 +13,12 @@ npm run dev
 
 Åpne http://localhost:4321.
 
+Rediger sidene i `src/pages/` og komponentene i `src/components/`. Stiler ligger i
+`src/styles/`, og JavaScript for komponentene ligger i `src/scripts/`. Astro bygger
+`dist/index.html` og de andre HTML-filene automatisk; de er ikke kildefiler som skal redigeres.
+
+Discord-invitasjonen legges inn under Innstillinger i Sanity når lenken er klar.
+
 Hvis Sanity ikke er satt opp ennå, bruker siden lokalt demo-innhold fra `src/lib/content.json`.
 
 ## Viktige kommandoer

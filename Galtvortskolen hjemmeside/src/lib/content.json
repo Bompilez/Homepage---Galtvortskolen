@@ -7,6 +7,7 @@
     "bookingUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdZ8juCYWh7ZKZMSUE58v3LWuJILkE2Dpn02ItRsJWgcH1ROg/viewform",
     "facebookUrl": "https://www.facebook.com/Galtvortskolen/",
     "instagramUrl": "https://www.instagram.com/galtvortskolen/",
+    "discordUrl": "",
     "announcement": "Nyttårsball 2027 · 8.–10. januar · Påmeldingen er åpen",
     "announcementUrl": "/arrangementer/nyttarsball-2027/"
   },
@@ -187,7 +188,7 @@
             "Har barnet ditt behov for tilrettelegging, eller er det noe dere lurer på? Ta kontakt med arrangørene før påmelding, så kan dere avklare spørsmål sammen."
           ],
           "linkLabel": "Kontakt arrangørene",
-          "linkUrl": "https://www.galtvortskolensarrangementer.net/kontakt/",
+          "linkUrl": "/kontakt/",
           "_type": "section"
         }
       ]
@@ -279,7 +280,7 @@
             "Lurer du på noe om arrangementene, rollen din eller påmelding? Du kan kontakte arrangørene via kontaktsiden."
           ],
           "linkLabel": "Gå til kontaktsiden",
-          "linkUrl": "https://www.galtvortskolensarrangementer.net/kontakt/",
+          "linkUrl": "/kontakt/",
           "_type": "section"
         }
       ]

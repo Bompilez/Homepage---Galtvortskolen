@@ -40,6 +40,30 @@
 }
 
 @media (max-width: 1099px) {
+  .site-menu {
+    left: 0;
+    right: 0;
+    max-height: calc(100dvh - 120px);
+    overflow-y: auto;
+    background: var(--ink);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 30px #0006;
+  }
+  .mega-menu-panel {
+    display: none;
+  }
+  .mobile-nav-content {
+    display: block;
+    padding: 10px 28px 25px;
+  }
+  .mobile-nav-content a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--text-ui);
+  }
   .desktop-nav {
     display: none;
   }
@@ -97,18 +121,6 @@
   }
 }
 
-@media (min-width: 1100px) and (max-width: 1700px) {
-  .site-header {
-    display: grid;
-    grid-template-columns: 1fr auto;
-  }
-  .desktop-nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-content: center;
-  }
-}
-
 @media (max-width: 760px) {
   .site-header {
     flex-wrap: nowrap;
@@ -145,7 +157,7 @@
   }
 
   html {
-    scroll-padding-top: 25px;
+    scroll-padding-top: 95px;
   }
   .container {
     width: calc(100% - 40px);
@@ -252,7 +264,7 @@
     width: 17px;
   }
   .intro-section {
-    padding: 60px 0;
+    padding: 60px 0 160px;
   }
   .intro-section h2 {
     font-size: 37px;
@@ -314,10 +326,10 @@
     left: 14px;
   }
   .event-section {
-    padding-bottom: 60px;
+    padding-bottom: 95px;
   }
   .experience-section {
-    padding-bottom: 65px;
+    padding-bottom: 100px;
   }
   .experience-grid {
     grid-template-columns: 1fr;
@@ -351,7 +363,7 @@
     font-size: 36px;
   }
   .parents-section {
-    padding: 45px 0;
+    padding: 80px 0;
   }
   .parents-grid {
     grid-template-columns: 1fr;
@@ -372,7 +384,7 @@
     max-width: none;
   }
   .closing-cta {
-    padding: 60px 0;
+    padding: 90px 0;
   }
   .closing-cta h2 {
     font-size: 38px;
@@ -431,6 +443,9 @@
   .prose h2 {
     font-size: 32px;
   }
+  .parents-info {
+    padding: 24px 20px;
+  }
 
   .page-heading {
     padding-block: 50px 40px;
@@ -464,6 +479,15 @@
   }
   .admin-page h1 {
     font-size: 46px;
+  }
+}
+
+@media (max-width: 500px) {
+  .site-header .brand-type {
+    display: none;
+  }
+  .header-events {
+    padding-inline: 11px;
   }
 }
 

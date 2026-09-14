@@ -2,9 +2,11 @@
 import HouseCup from '../components/HouseCup.astro';
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
+import FloatingStars from '../components/FloatingStars.astro';
 import { getContent, registrationIsOpen, safeLink, dateLabel, money } from '../lib/content';
 const { settings, home, events } = await getContent();
 const nextEvent = events.find((event) => event.endDate >= new Date().toISOString().slice(0, 10));
+const discordUrl = safeLink(settings.discordUrl);
 ---
 
 <Layout settings={settings} image={home.heroImage.url}>
@@ -47,6 +49,7 @@ const nextEvent = events.find((event) => event.endDate >= new Date().toISOString
     </span>
   </div>
   <section class="intro-section container" id="velkommen">
+    <FloatingStars />
     <div class="ornament" aria-hidden="true">
       ✦
     </div>
@@ -138,6 +141,28 @@ const nextEvent = events.find((event) => event.endDate >= new Date().toISOString
       ))}
     </div>
   </section>
+  <section class="discord-section">
+    <div class="discord-inner container">
+      <div class="discord-art" aria-hidden="true">
+        <span>✦</span>
+        <span>✧</span>
+      </div>
+      <div class="discord-copy">
+        <h2>Magien fortsetter på Discord</h2>
+        <p>
+          Galtvortskolen har en egen Discord-server der fellesskapet kan holde kontakten mellom
+          arrangementene. Her legger vi invitasjonslenken så snart vi har den.
+        </p>
+        {discordUrl !== '#' ? (
+          <a class="button button-gold" href={discordUrl}>
+            Bli med på Discord <Icon />
+          </a>
+        ) : (
+          <span class="discord-coming">Invitasjonslenke kommer</span>
+        )}
+      </div>
+    </div>
+  </section>
   <section class="parents-section">
     <div class="container parents-grid">
       <div class="parents-image">
@@ -154,7 +179,7 @@ const nextEvent = events.find((event) => event.endDate >= new Date().toISOString
         <Icon name="shield" />
         <h2>{home.parentsTitle}</h2>
         <p>{home.parentsText}</p>
-        <a class="button button-outline" href="/foresatte/">
+        <a class="button button-outline" href="/praktisk-info/#foresatte">
           Bli trygg på opplevelsen <Icon />
         </a>
       </div>

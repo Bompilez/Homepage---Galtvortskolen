@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { getContent, safeLink } from '../lib/content';
+
+const { settings } = await getContent();
+const email = 'galtvortskolensarrangementer@gmail.com';
+---
+
+<Layout
+  settings={settings}
+  title="Kontakt oss"
+  description="Kontakt Galtvortskolen om arrangementer, presse og samarbeid."
+>
+  <section class="contact-page container">
+    <a class="breadcrumb" href="/">
+      Forside /
+    </a>
+    <h1>Kontakt oss</h1>
+    <p class="lead">Lurer du på noe om arrangementene våre? Ta gjerne kontakt.</p>
+
+    <div class="contact-grid">
+      <section class="contact-card">
+        <h2>E-post</h2>
+        <p>Spørsmål om arrangementer, påmelding eller oppholdet?</p>
+        <a class="text-link" href={`mailto:${email}`}>
+          {email} <Icon />
+        </a>
+      </section>
+      <section class="contact-card">
+        <h2>Facebook</h2>
+        <p>Du finner oss også på Facebook.</p>
+        <a class="text-link" href={safeLink(settings.facebookUrl)}>
+          Besøk Galtvortskolen på Facebook <Icon />
+        </a>
+      </section>
+    </div>
+
+    <section class="contact-press">
+      <h2>Presse, promotering og forespørsler</h2>
+      <p>Send oss en e-post med hva henvendelsen gjelder, så følger vi den opp.</p>
+      <a class="text-link" href={`mailto:${email}?subject=Presse%20og%20foresp%C3%B8rsler`}>
+        Kontakt oss på e-post <Icon />
+      </a>
+    </section>
+  </section>
+</Layout>

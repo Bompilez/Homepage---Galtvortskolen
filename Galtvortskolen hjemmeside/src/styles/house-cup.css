@@ -253,7 +253,7 @@
 }
 .house-cup-teaser {
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  padding-block: 70px;
+  padding-block: 105px;
 }
 .house-cup-page {
   grid-template-columns: minmax(0, 1fr);
@@ -560,7 +560,7 @@
     padding-top: 60px;
   }
   .house-cup-teaser {
-    padding-block: 55px;
+    padding-block: 85px;
   }
   .cup-intro h2 {
     max-width: none;
