@@ -7,6 +7,15 @@ if (magicRoot) {
   const label = root.querySelector<HTMLElement>('[data-magic-label]')!;
   const message = root.querySelector<HTMLElement>('.magic-message')!;
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLElement>('main h1, main h2, main h3').forEach((heading) => {
+    if (heading.childElementCount || !heading.textContent?.trim()) return;
+    const shine = document.createElement('span');
+    shine.className = 'magic-title-shine';
+    shine.setAttribute('aria-hidden', 'true');
+    shine.textContent = heading.textContent;
+    heading.classList.add('magic-title');
+    heading.append(shine);
+  });
   type Spark = {
     x: number;
     y: number;
@@ -153,6 +162,14 @@ if (magicRoot) {
     (event) => {
       if (event.pointerType !== 'mouse' || performance.now() - lastMove < 35) return;
       lastMove = performance.now();
+      if (active && event.target instanceof Element) {
+        const section = event.target.closest<HTMLElement>('.magic-reveal-section');
+        if (section) {
+          const bounds = section.getBoundingClientRect();
+          section.style.setProperty('--magic-x', `${event.clientX - bounds.left}px`);
+          section.style.setProperty('--magic-y', `${event.clientY - bounds.top}px`);
+        }
+      }
       cast(event.clientX, event.clientY);
     },
     { passive: true },

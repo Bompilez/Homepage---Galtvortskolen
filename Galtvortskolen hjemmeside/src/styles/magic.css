@@ -75,20 +75,61 @@
   transform: none;
 }
 
+@media (hover: hover) {
+  .magic-reveal-section {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .magic-reveal-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: url('/images/hidden-constellations.svg') center / 480px 360px repeat;
+    -webkit-mask-image: radial-gradient(circle 185px at var(--magic-x, 50%) var(--magic-y, 50%), #000 18%, transparent 100%);
+    mask-image: radial-gradient(circle 185px at var(--magic-x, 50%) var(--magic-y, 50%), #000 18%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .magic-reveal-section > :not(.floating-stars):not(.constellation) {
+    position: relative;
+    z-index: 1;
+  }
+
+  body.magic-enabled .magic-reveal-section:hover::before {
+    opacity: 0.75;
+  }
+}
+
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   body.magic-enabled main h1,
   body.magic-enabled main h2,
   body.magic-enabled main h3 {
-    line-height: 1.2;
-    padding: 0.08em 0.12em;
     transition: transform 0.4s ease;
   }
 
-  body.magic-enabled main h1:hover,
-  body.magic-enabled main h2:hover,
-  body.magic-enabled main h3:hover {
+  main .magic-title {
     position: relative;
-    z-index: 10;
+  }
+
+  main .magic-title-shine {
+    position: absolute;
+    inset: -8px;
+    display: block;
+    padding: 8px;
+    color: transparent;
+    font: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    text-shadow: none;
+    text-wrap: inherit;
+    white-space: inherit;
+    pointer-events: none;
+    opacity: 0;
     background-image: linear-gradient(
       110deg,
       #fff8e2 0%,
@@ -100,8 +141,22 @@
     background-size: 250% 100%;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: magic-title-sweep 1.15s ease-out both;
+  }
+
+  body.magic-enabled main h1:hover,
+  body.magic-enabled main h2:hover,
+  body.magic-enabled main h3:hover {
+    z-index: 10;
     transform: scale(1.035);
+  }
+
+  body.magic-enabled main .magic-title:hover {
+    color: var(--gold);
+  }
+
+  body.magic-enabled main .magic-title:hover .magic-title-shine {
+    opacity: 1;
+    animation: magic-title-sweep 1.15s ease-out both;
   }
 }
 
